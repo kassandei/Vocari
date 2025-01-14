@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     socket.on('chat message', (message) => {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message');
-        messageElement.innerHTML = `<span style="color: ${message.color}">${message.username}</span>: ${message.text} <span class="date">${message.date}</span>`;
+        messageElement.innerHTML = `<span class="username" style="background-color: ${message.color}">${message.username}</span><span class="text">${message.text}</span><span class="date">${message.date}</span>`;
         chatHistory.appendChild(messageElement);
         chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
     });
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         messages.forEach((message) => {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
-            messageElement.innerHTML = `<span style="color: ${message.color}">${message.username}</span>: ${message.text} <span class="date">${message.date}</span>`;
+            messageElement.innerHTML = `<span class="username" style="background-color: ${message.color}">${message.username}</span><span class="text">${message.text}</span><span class="date">${message.date}</span>`;
             chatHistory.appendChild(messageElement);
         });
         chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
