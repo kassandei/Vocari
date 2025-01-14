@@ -154,20 +154,19 @@ body {
 .input-area {
     display: flex;
     padding: 10px;
-    background: #f4f4f4;
-    border-top: 2px solid #007bff; /* Add a border to match the site's color */
+    background: #f0f8ff; /* Light blue background color */
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Add a shadow for a cool effect */
     border-radius: 8px; /* Add border radius for rounded corners */
     margin-top: 20px; /* Add margin to separate from the chat box */
-    margin-bottom: 20px; /* Add margin to create space between chatbox and input area */
-    background-color: #f0f8ff; /* Light blue background color */
+    border: none; /* Remove any border */
 }
 
 .input-area input[type="text"] {
     flex: 1;
     padding: 12px;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
+    background: #f0f8ff; /* Light blue background color */
+    border: none; /* Remove any border */
+    border-radius: 4px; /* Add border radius for rounded corners */
     margin-right: 10px;
     font-size: 16px;
 }
@@ -236,7 +235,7 @@ body {
     background-color: #2c3e50;
 }
 
-/* Position the online users list to the left of the chatbox */
+/* Position the online users list directly below the toggle button */
 .online-users {
     position: absolute; /* Position it relative to the container */
     background: #ffffff;
