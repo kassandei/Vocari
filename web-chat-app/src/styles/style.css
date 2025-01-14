@@ -230,6 +230,32 @@ body {
 .online-users {
     position: absolute;
     top: 10px;
+    right: 10px;
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: none;
+}
+
+.online-users h3 {
+    margin: 0 0 10px 0;
+}
+
+.online-users ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.online-users li {
+    margin-bottom: 5px;
+}
+
+.toggle-users {
+    position: absolute;
+    top: 10px;
     left: -50px; /* Move the button outside the chat box */
     background: #007bff; /* Blue color */
     color: #ffffff;
@@ -244,29 +270,8 @@ body {
     align-items: center;
 }
 
-.online-users:hover {
-    background-color: #0056b3;
-}
-
-.toggle-users {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: #35424a;
-    color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .toggle-users:hover {
-    background-color: #2c3e50;
+    background-color: #0056b3;
 }
 
 footer {
