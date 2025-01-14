@@ -23,8 +23,3 @@ io.on('connection', (socket) => {
 server.listen(80, () => {
     console.log('listening on *:80');
 });
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    const socket = io('http://vocari.me');
-    // ...existing code...
-});
