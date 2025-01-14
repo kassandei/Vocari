@@ -36,36 +36,40 @@ socket.addEventListener('close', () => {
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    const socket = io('http://vocari.me');
+    const socket = io('https://vocari.me'); // Ensure the URL uses HTTPS
 
     const form = document.getElementById('message-form');
     const messageInput = document.getElementById('message-input');
     const chatHistory = document.getElementById('chat-history');
     const username = 'User'; // Replace with actual username logic
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        if (messageInput.value) {
-            const message = {
-                username: username,
-                text: messageInput.value,
-            };
-            socket.emit('chat message', message);
-            messageInput.value = '';
-        }
-    });
+    if (form && messageInput && chatHistory) {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            if (messageInput.value) {
+                const message = {
+                    username: username,
+                    text: messageInput.value,
+                };
+                socket.emit('chat message', message);
+                messageInput.value = '';
+            }
+        });
 
-    socket.on('chat message', (message) => {
-        const messageElement = document.createElement('div');
-        messageElement.textContent = `${message.username}: ${message.text}`;
-        chatHistory.appendChild(messageElement);
-    });
+        socket.on('chat message', (message) => {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${message.username}: ${message.text}`;
+            chatHistory.appendChild(messageElement);
+        });
 
-    socket.on('connect', () => {
-        console.log('Connected to the chat server');
-    });
+        socket.on('connect', () => {
+            console.log('Connected to the chat server');
+        });
 
-    socket.on('disconnect', () => {
-        console.log('Disconnected from the chat server');
-    });
+        socket.on('disconnect', () => {
+            console.log('Disconnected from the chat server');
+        });
+    } else {
+        console.error('Required DOM elements not found');
+    }
 });
