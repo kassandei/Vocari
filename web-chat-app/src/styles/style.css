@@ -239,8 +239,6 @@ body {
 /* Position the online users list to the left of the chatbox */
 .online-users {
     position: absolute; /* Position it relative to the container */
-    top: 10px;
-    left: 10px; /* Adjust the position to the left */
     background: #ffffff;
     border: 1px solid #cccccc;
     border-radius: 8px;
