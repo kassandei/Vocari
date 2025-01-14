@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const cancelSend = document.querySelector('#cancel-send');
     const toggleUsersButton = document.querySelector('#toggle-users-button');
     const onlineUsers = document.querySelector('.online-users');
+    const usersList = document.querySelector('#users-list');
 
     let username = '';
     let userColor = '#000000';
@@ -146,5 +147,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         } else {
             onlineUsers.style.display = 'none';
         }
+    });
+
+    // Handle receiving the list of online users
+    socket.on('online users', (users) => {
+        usersList.innerHTML = ''; // Clear the list
+        users.forEach(user => {
+            const li = document.createElement('li');
+            li.textContent = user;
+            usersList.appendChild(li);
+        });
     });
 });
