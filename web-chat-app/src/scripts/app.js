@@ -139,13 +139,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     });
 
-    // Move the user list under the icon when pressed
+    // Move the user list to the left of the chatbox when pressed
     toggleUsersButton.addEventListener('click', () => {
         if (onlineUsers.style.display === 'none' || onlineUsers.style.display === '') {
             onlineUsers.style.display = 'block';
             const rect = toggleUsersButton.getBoundingClientRect();
             onlineUsers.style.top = `${rect.bottom + window.scrollY}px`;
-            onlineUsers.style.left = `${rect.left + window.scrollX}px`;
+            onlineUsers.style.left = `${rect.left + window.scrollX - onlineUsers.offsetWidth}px`;
         } else {
             onlineUsers.style.display = 'none';
         }
