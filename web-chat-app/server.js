@@ -28,7 +28,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        console.log('user disconnected');
         if (socket.username) {
             users.delete(socket.username);
             io.emit('update users', Array.from(users)); // Update all clients with the new user list

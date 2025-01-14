@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     text: `<a href="${e.target.result}" download="${fileToSend.name}">${fileToSend.name}</a>`,
                     color: userColor,
                     date: new Date().toLocaleString(),
-                    icon: URL.createObjectURL(fileToSend),
+                    icon: e.target.result,
                 };
                 socket.emit('chat message', message);
                 fileToSend = null;
