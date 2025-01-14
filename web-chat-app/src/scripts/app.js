@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const messageInput = document.getElementById('message-input');
     const usernameInput = document.getElementById('username-input');
+    const colorInput = document.getElementById('color-input');
     const chatHistory = document.getElementById('chat-history');
     const sendButton = document.getElementById('send-button');
     const loginButton = document.getElementById('login-button');
@@ -11,12 +12,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const fileInput = document.getElementById('file-input');
 
     let username = '';
+    let userColor = '#000000';
 
     loginButton.addEventListener('click', (event) => {
         event.preventDefault();
         username = usernameInput.value;
+        userColor = colorInput.value;
         if (username) {
             usernameInput.disabled = true;
+            colorInput.disabled = true;
             loginForm.style.display = 'none';
             chatContainer.style.display = 'flex';
         }
@@ -36,6 +40,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const message = {
                 username: username,
                 text: messageInput.value,
+                color: userColor,
             };
             socket.emit('chat message', message);
             messageInput.value = '';
@@ -50,6 +55,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const message = {
                     username: username,
                     text: `<a href="${e.target.result}" download="${file.name}">${file.name}</a>`,
+                    color: userColor,
                 };
                 socket.emit('chat message', message);
             };
@@ -60,7 +66,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     socket.on('chat message', (message) => {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message');
-        messageElement.innerHTML = `${message.username}: ${message.text}`;
+        messageElement.innerHTML = `<span style="color: ${message.color}">${message.username}</span>: ${message.text}`;
         chatHistory.appendChild(messageElement);
         chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
     });
@@ -70,7 +76,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         messages.forEach((message) => {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
-            messageElement.innerHTML = `${message.username}: ${message.text}`;
+            messageElement.innerHTML = `<span style="color: ${message.color}">${message.username}</span>: ${message.text}`;
             chatHistory.appendChild(messageElement);
         });
         chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
