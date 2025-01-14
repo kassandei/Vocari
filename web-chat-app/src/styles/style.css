@@ -237,8 +237,6 @@ body {
 /* Position the online users list directly below the toggle button */
 .online-users {
     position: absolute; /* Position it relative to the container */
-    top: 50px; /* Position it directly below the toggle button */
-    right: 10px;
     background: #ffffff;
     border: 1px solid #cccccc;
     border-radius: 8px;

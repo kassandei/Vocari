@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
+    // Fix file upload to send as a downloadable link
     fileInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file && username) {
@@ -84,7 +85,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     text: `<a href="${e.target.result}" download="${fileToSend.name}">${fileToSend.name}</a>`,
                     color: userColor,
                     date: new Date().toLocaleString(),
-                    icon: e.target.result,
                 };
                 socket.emit('chat message', message);
                 fileToSend = null;
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (onlineUsers.style.display === 'none') {
             onlineUsers.style.display = 'block';
             onlineUsers.style.top = `${toggleUsersButton.offsetTop + toggleUsersButton.offsetHeight}px`;
-            onlineUsers.style.right = `${window.innerWidth - toggleUsersButton.offsetLeft - toggleUsersButton.offsetWidth}px`;
+            onlineUsers.style.left = `${toggleUsersButton.offsetLeft}px`;
         } else {
             onlineUsers.style.display = 'none';
         }
