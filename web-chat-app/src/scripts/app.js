@@ -34,3 +34,28 @@ socket.addEventListener('open', () => {
 socket.addEventListener('close', () => {
     console.log('Disconnected from the chat server');
 });
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const socket = io('http://vocari.me');
+
+    const form = document.getElementById('message-form');
+    const input = document.getElementById('message-input');
+    const messages = document.getElementById('messages');
+
+    if (form && input && messages) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('chat message', input.value);
+                input.value = '';
+            }
+        });
+
+        socket.on('chat message', function(msg) {
+            const item = document.createElement('li');
+            item.textContent = msg;
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+    }
+});
