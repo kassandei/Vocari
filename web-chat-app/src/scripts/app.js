@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const toggleUsersButton = document.querySelector('#toggle-users-button');
     const onlineUsers = document.querySelector('#online-users');
     const usersList = document.querySelector('#users-list');
+    const inputArea = document.querySelector('.input-area');
 
     let username = '';
     let userColor = '#000000';
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     colorInput.disabled = true;
                     loginForm.style.display = 'none';
                     chatContainer.style.display = 'flex';
+                    inputArea.style.display = 'flex'; // Show the input area
                     chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
                 } else {
                     alert('Username is already taken. Please choose another one.');
