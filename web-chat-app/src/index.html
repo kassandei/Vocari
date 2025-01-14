@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Chat App</title>
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@nolanlawson/emoji-picker-element@1.0.0/dist/emoji-picker-element.js"></script>
 </head>
 <body>
     <div class="container">
         <div id="login-form" class="login-form">
             <h2>Login</h2>
-            <input type="text" id="username-input" placeholder="Enter your username">
-            <input type="color" id="color-input" class="jscolor" value="#000000" style="display: none;">
-            <div id="color-display" class="color-display"></div>
-            <button id="login-button">Login</button>
+            <div class="login-inputs">
+                <input type="text" id="username-input" placeholder="Enter your username">
+                <input type="color" id="color-input" value="#000000">
+            </div>
+            <button id="login-button">Enter</button>
         </div>
         <div id="chat-container" class="chat-container" style="display: none;">
             <div id="chat-history" class="chat-history"></div>
@@ -23,8 +22,6 @@
                 <input type="text" id="message-input" placeholder="Enter your message">
                 <label for="file-input" class="file-label">📎</label>
                 <input type="file" id="file-input" style="display: none;">
-                <button id="emoji-button">😊</button>
-                <emoji-picker id="emoji-picker" style="display: none;"></emoji-picker>
                 <button id="send-button">Send</button>
             </div>
         </div>
@@ -34,7 +31,6 @@
     </footer>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
     <script src="scripts/app.js"></script>
 </body>
 </html>

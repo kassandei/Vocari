@@ -38,34 +38,36 @@ body {
     margin-bottom: 20px;
 }
 
+.login-inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
 .login-form input {
-    width: calc(100% - 22px);
     padding: 10px;
     border: 1px solid #cccccc;
     border-radius: 4px;
     margin-bottom: 10px;
 }
 
-.color-display {
+#color-input {
     width: 40px;
     height: 40px;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    margin: 10px auto;
+    padding: 0;
+    border: none;
     cursor: pointer;
 }
 
-.color-display:hover {
-    border-color: #888888;
-}
-
 .login-form button {
-    padding: 10px 15px;
+    padding: 12px 20px;
     background-color: #35424a;
     color: #ffffff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
 }
 
 .login-form button:hover {
@@ -110,10 +112,11 @@ body {
 
 .input-area input[type="text"] {
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #cccccc;
     border-radius: 4px;
     margin-right: 10px;
+    font-size: 16px;
 }
 
 .input-area input[type="file"] {
@@ -121,12 +124,13 @@ body {
 }
 
 .input-area .file-label {
-    padding: 10px;
+    padding: 12px;
     background-color: #35424a;
     color: #ffffff;
     border-radius: 4px;
     cursor: pointer;
     margin-right: 10px;
+    font-size: 16px;
 }
 
 .input-area .file-label:hover {
@@ -134,12 +138,13 @@ body {
 }
 
 .input-area button {
-    padding: 10px 15px;
+    padding: 12px 20px;
     background-color: #35424a;
     color: #ffffff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
 }
 
 .input-area button:hover {
@@ -157,7 +162,7 @@ body {
 footer {
     margin-top: auto;
     padding: 10px;
-    background: #35424a;
+    background: #add8e6; /* Light blue color */
     color: #ffffff;
     text-align: center;
     width: 100%;

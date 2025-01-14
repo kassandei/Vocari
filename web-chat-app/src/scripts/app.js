@@ -72,12 +72,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (file && username) {
             const reader = new FileReader();
             reader.onload = (e) => {
-                const message = {
-                    username: username,
-                    text: `<a href="${e.target.result}" download="${file.name}">${file.name}</a>`,
-                    color: userColor,
-                };
-                socket.emit('chat message', message);
+                const confirmation = confirm(`Do you want to send the file "${file.name}"?`);
+                if (confirmation) {
+                    const message = {
+                        username: username,
+                        text: `<a href="${e.target.result}" download="${file.name}">${file.name}</a>`,
+                        color: userColor,
+                    };
+                    socket.emit('chat message', message);
+                }
             };
             reader.readAsDataURL(file);
         }
