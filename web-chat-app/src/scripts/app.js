@@ -8,18 +8,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const chatHistory = document.querySelector('#chat-history');
     const sendButton = document.querySelector('#send-button');
     const loginButton = document.querySelector('#login-button');
-    const emojiButton = document.getElementById('emoji-button');
-    const emojiPicker = document.getElementById('emoji-picker');
     const loginForm = document.querySelector('#login-form');
     const chatContainer = document.querySelector('#chat-container');
     const fileInput = document.querySelector('#file-input');
 
     let username = '';
     let userColor = '#000000';
-
-    colorDisplay.addEventListener('click', () => {
-        colorInput.click();
-    });
 
     colorInput.addEventListener('input', (event) => {
         userColor = event.target.value;
@@ -44,15 +38,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             event.preventDefault();
             sendMessage();
         }
-    });
-
-    emojiButton.addEventListener('click', () => {
-        emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
-    });
-
-    emojiPicker.addEventListener('emoji-click', (event) => {
-        messageInput.value += event.detail.unicode;
-        emojiPicker.style.display = 'none';
     });
 
     function sendMessage() {
