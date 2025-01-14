@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     });
 
-    // Move the user list under and to the left of the button when pressed
+    // Move the user list to the left of the chatbox when pressed
     toggleUsersButton.addEventListener('click', () => {
         if (onlineUsers.style.display === 'none' || onlineUsers.style.display === '') {
             onlineUsers.style.display = 'block';
