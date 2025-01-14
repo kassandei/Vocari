@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             onlineUsers.style.display = 'block';
             const rect = toggleUsersButton.getBoundingClientRect();
             onlineUsers.style.top = `${rect.bottom + window.scrollY}px`;
-            onlineUsers.style.left = `${rect.left + window.scrollX - onlineUsers.offsetWidth}px`;
+            onlineUsers.style.left = `${rect.left + window.scrollX}px`;
         } else {
             onlineUsers.style.display = 'none';
         }
