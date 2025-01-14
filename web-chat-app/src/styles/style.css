@@ -147,11 +147,13 @@ body {
     background-color: #f9f9f9;
 }
 
+/* Add margin to separate the input area from the chat box */
 .input-area {
     display: flex;
     padding: 10px;
     background: #f4f4f4;
-    margin-top: 5px; /* Separate the message input bar from the chat box */
+    margin-top: 10px; /* Add margin to separate from the chat box */
+    border-top: 1px solid #cccccc; /* Add border to match the site's color */
 }
 
 .input-area input[type="text"] {
@@ -227,10 +229,10 @@ body {
     background-color: #2c3e50;
 }
 
-/* Position the online users list outside the chat box */
+/* Position the online users list below the toggle button */
 .online-users {
-    position: fixed; /* Change to fixed to position it outside the chat box */
-    top: 10px;
+    position: absolute; /* Change to absolute to position it relative to the container */
+    top: 60px; /* Position it below the toggle button */
     right: 10px;
     background: #ffffff;
     border: 1px solid #cccccc;
@@ -257,9 +259,9 @@ body {
 
 /* Adjust the toggle button position */
 .toggle-users {
-    position: fixed; /* Change to fixed to position it outside the chat box */
+    position: absolute; /* Change to absolute to position it relative to the container */
     top: 10px;
-    right: 60px; /* Adjust the position to the right */
+    right: 10px; /* Adjust the position to the right */
     background: #007bff; /* Blue color */
     color: #ffffff;
     border: none;
