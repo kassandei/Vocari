@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const fileName = document.querySelector('#file-name');
     const confirmSend = document.querySelector('#confirm-send');
     const cancelSend = document.querySelector('#cancel-send');
+    const toggleUsersButton = document.querySelector('#toggle-users');
+    const onlineUsers = document.querySelector('#online-users');
+    const usersList = document.querySelector('#users-list');
 
     let username = '';
     let userColor = '#000000';
@@ -27,10 +30,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
         event.preventDefault();
         username = usernameInput.value;
         if (username) {
-            usernameInput.disabled = true;
-            colorInput.disabled = true;
-            loginForm.style.display = 'none';
-            chatContainer.style.display = 'flex';
+            socket.emit('check username', username, (isAvailable) => {
+                if (isAvailable) {
+                    usernameInput.disabled = true;
+                    colorInput.disabled = true;
+                    loginForm.style.display = 'none';
+                    chatContainer.style.display = 'flex';
+                    chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
+                } else {
+                    alert('Username is already taken. Please choose another one.');
+                }
+            });
         }
     });
 
@@ -74,6 +84,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     text: `<a href="${e.target.result}" download="${fileToSend.name}">${fileToSend.name}</a>`,
                     color: userColor,
                     date: new Date().toLocaleString(),
+                    icon: URL.createObjectURL(fileToSend),
                 };
                 socket.emit('chat message', message);
                 fileToSend = null;
@@ -94,6 +105,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         messageElement.innerHTML = `
             <span class="username" style="background-color: ${message.color}">${message.username}</span>
             <span class="text">${message.text}</span>
+            ${message.icon ? `<img src="${message.icon}" alt="File Icon" class="file-icon">` : ''}
             <span class="date">${message.date}</span>
         `;
         chatHistory.appendChild(messageElement);
@@ -108,10 +120,28 @@ document.addEventListener('DOMContentLoaded', (event) => {
             messageElement.innerHTML = `
                 <span class="username" style="background-color: ${message.color}">${message.username}</span>
                 <span class="text">${message.text}</span>
+                ${message.icon ? `<img src="${message.icon}" alt="File Icon" class="file-icon">` : ''}
                 <span class="date">${message.date}</span>
             `;
             chatHistory.appendChild(messageElement);
         });
         chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
+    });
+
+    socket.on('update users', (users) => {
+        usersList.innerHTML = '';
+        users.forEach((user) => {
+            const userElement = document.createElement('li');
+            userElement.textContent = user;
+            usersList.appendChild(userElement);
+        });
+    });
+
+    toggleUsersButton.addEventListener('click', () => {
+        if (onlineUsers.style.display === 'none') {
+            onlineUsers.style.display = 'block';
+        } else {
+            onlineUsers.style.display = 'none';
+        }
     });
 });
