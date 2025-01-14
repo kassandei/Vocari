@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Move the user list under the icon when pressed
     toggleUsersButton.addEventListener('click', () => {
-        if (onlineUsers.style.display === 'none') {
+        if (onlineUsers.style.display === 'none' || onlineUsers.style.display === '') {
             onlineUsers.style.display = 'block';
             const rect = toggleUsersButton.getBoundingClientRect();
             onlineUsers.style.top = `${rect.bottom + window.scrollY}px`;
