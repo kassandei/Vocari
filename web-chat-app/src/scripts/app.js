@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const loginButton = document.querySelector('#login-button');
     const loginForm = document.querySelector('#login-form');
     const chatContainer = document.querySelector('#chat-container');
-    const fileInput = document.querySelector('#file-input');
+    const fileInput = document.querySelector('#file-upload'); // Updated selector
     const fileConfirmation = document.querySelector('#file-confirmation');
     const fileName = document.querySelector('#file-name');
     const confirmSend = document.querySelector('#confirm-send');
@@ -84,7 +84,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     text: `<a href="${e.target.result}" download="${fileToSend.name}">${fileToSend.name}</a>`,
                     color: userColor,
                     date: new Date().toLocaleString(),
-                    icon: e.target.result,
                 };
                 socket.emit('chat message', message);
                 fileToSend = null;
@@ -105,7 +104,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         messageElement.innerHTML = `
             <span class="username" style="background-color: ${message.color}">${message.username}</span>
             <span class="text">${message.text}</span>
-            ${message.icon ? `<img src="${message.icon}" alt="File Icon" class="file-icon">` : ''}
             <span class="date">${message.date}</span>
         `;
         chatHistory.appendChild(messageElement);
@@ -120,7 +118,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             messageElement.innerHTML = `
                 <span class="username" style="background-color: ${message.color}">${message.username}</span>
                 <span class="text">${message.text}</span>
-                ${message.icon ? `<img src="${message.icon}" alt="File Icon" class="file-icon">` : ''}
                 <span class="date">${message.date}</span>
             `;
             chatHistory.appendChild(messageElement);

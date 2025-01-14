@@ -157,6 +157,10 @@ body {
     border-top: 2px solid #007bff; /* Add a border to match the site's color */
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Add a shadow for a cool effect */
     border-radius: 8px; /* Add border radius for rounded corners */
+    position: fixed; /* Fix the position to separate it completely */
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it appears above other elements */
 }
 
 .input-area input[type="text"] {
@@ -235,7 +239,7 @@ body {
 /* Position the online users list directly below the toggle button */
 .online-users {
     position: absolute; /* Position it relative to the container */
-    top: 50px; /* Position it directly below the toggle button */
+    top: 60px; /* Position it directly below the toggle button */
     right: 10px;
     background: #ffffff;
     border: 1px solid #cccccc;
