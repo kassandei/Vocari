@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     usernameInput.addEventListener('change', (event) => {
         username = event.target.value;
+        usernameInput.disabled = true; // Disable the input after setting the username
     });
 
     sendButton.addEventListener('click', () => {
@@ -25,7 +26,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     socket.on('chat message', (message) => {
         const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
         messageElement.textContent = `${message.username}: ${message.text}`;
         chatHistory.appendChild(messageElement);
+    });
+
+    socket.on('chat history', (messages) => {
+        chatHistory.innerHTML = ''; // Clear existing messages
+        messages.forEach((message) => {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.textContent = `${message.username}: ${message.text}`;
+            chatHistory.appendChild(messageElement);
+        });
     });
 });
