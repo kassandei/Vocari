@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     text: `<a href="${e.target.result}" download="${fileToSend.name}">${fileToSend.name}</a>`,
                     color: userColor,
                     date: new Date().toLocaleString(),
+                    icon: fileIcon.src,
                 };
                 socket.emit('chat message', message);
                 fileToSend = null;
@@ -96,7 +97,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     socket.on('chat message', (message) => {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message');
-        messageElement.innerHTML = `<span class="username" style="background-color: ${message.color}">${message.username}</span><span class="text">${message.text}</span><span class="date">${message.date}</span>`;
+        messageElement.innerHTML = `
+            <span class="username" style="background-color: ${message.color}">${message.username}</span>
+            <span class="text">${message.text}</span>
+            ${message.icon ? `<img src="${message.icon}" alt="File Icon" style="width: 50px; height: 50px;">` : ''}
+            <span class="date">${message.date}</span>
+        `;
         chatHistory.appendChild(messageElement);
         chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
     });
@@ -106,7 +112,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         messages.forEach((message) => {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
-            messageElement.innerHTML = `<span class="username" style="background-color: ${message.color}">${message.username}</span><span class="text">${message.text}</span><span class="date">${message.date}</span>`;
+            messageElement.innerHTML = `
+                <span class="username" style="background-color: ${message.color}">${message.username}</span>
+                <span class="text">${message.text}</span>
+                ${message.icon ? `<img src="${message.icon}" alt="File Icon" style="width: 50px; height: 50px;">` : ''}
+                <span class="date">${message.date}</span>
+            `;
             chatHistory.appendChild(messageElement);
         });
         chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom

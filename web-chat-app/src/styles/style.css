@@ -110,7 +110,7 @@ body {
 }
 
 .message .username {
-    background-color: #007bff; /* Default light blue color */
+    background-color: #add8e6; /* Light blue color */
     color: #ffffff;
     padding: 5px 10px;
     border-radius: 12px;
@@ -120,6 +120,8 @@ body {
 
 .message .text {
     margin-top: 5px;
+    word-wrap: break-word; /* Ensure long messages wrap to the next line */
+    white-space: pre-wrap; /* Preserve whitespace and wrap text */
 }
 
 .message .date {
