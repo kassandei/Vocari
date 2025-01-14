@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -110,6 +111,10 @@ body {
     margin-right: 10px;
 }
 
+.input-area input[type="file"] {
+    margin-right: 10px;
+}
+
 .input-area button {
     padding: 10px 15px;
     background-color: #35424a;
@@ -129,6 +134,15 @@ body {
     border: 1px solid #cccccc;
     border-radius: 4px;
     width: calc(100% - 22px); /* Adjust width to account for padding and border */
+}
+
+footer {
+    margin-top: auto;
+    padding: 10px;
+    background: #35424a;
+    color: #ffffff;
+    text-align: center;
+    width: 100%;
 }
 
 @keyframes fadeIn {

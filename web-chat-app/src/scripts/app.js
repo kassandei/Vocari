@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const loginButton = document.getElementById('login-button');
     const loginForm = document.getElementById('login-form');
     const chatContainer = document.getElementById('chat-container');
+    const fileInput = document.getElementById('file-input');
 
     let username = '';
 
@@ -21,7 +22,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    sendButton.addEventListener('click', () => {
+    sendButton.addEventListener('click', sendMessage);
+
+    messageInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+
+    function sendMessage() {
         if (messageInput.value && username) {
             const message = {
                 username: username,
@@ -30,12 +40,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
             socket.emit('chat message', message);
             messageInput.value = '';
         }
+    }
+
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file && username) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const message = {
+                    username: username,
+                    text: `<a href="${e.target.result}" download="${file.name}">${file.name}</a>`,
+                };
+                socket.emit('chat message', message);
+            };
+            reader.readAsDataURL(file);
+        }
     });
 
     socket.on('chat message', (message) => {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message');
-        messageElement.textContent = `${message.username}: ${message.text}`;
+        messageElement.innerHTML = `${message.username}: ${message.text}`;
         chatHistory.appendChild(messageElement);
         chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
     });
@@ -45,7 +70,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         messages.forEach((message) => {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
-            messageElement.textContent = `${message.username}: ${message.text}`;
+            messageElement.innerHTML = `${message.username}: ${message.text}`;
             chatHistory.appendChild(messageElement);
         });
         chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
