@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const fileInput = document.querySelector('#file-input');
     const fileConfirmation = document.querySelector('#file-confirmation');
     const fileName = document.querySelector('#file-name');
-    const fileIcon = document.querySelector('#file-icon');
     const confirmSend = document.querySelector('#confirm-send');
     const cancelSend = document.querySelector('#cancel-send');
 
@@ -62,8 +61,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (file && username) {
             fileToSend = file;
             fileName.textContent = `Do you want to send the file "${file.name}"?`;
-            fileIcon.src = URL.createObjectURL(file);
-            fileIcon.style.display = 'block';
             fileConfirmation.style.display = 'block';
         }
     });
@@ -77,12 +74,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     text: `<a href="${e.target.result}" download="${fileToSend.name}">${fileToSend.name}</a>`,
                     color: userColor,
                     date: new Date().toLocaleString(),
-                    icon: fileIcon.src,
                 };
                 socket.emit('chat message', message);
                 fileToSend = null;
                 fileConfirmation.style.display = 'none';
-                fileIcon.style.display = 'none';
             };
             reader.readAsDataURL(fileToSend);
         }
@@ -91,7 +86,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     cancelSend.addEventListener('click', () => {
         fileToSend = null;
         fileConfirmation.style.display = 'none';
-        fileIcon.style.display = 'none';
     });
 
     socket.on('chat message', (message) => {
@@ -100,7 +94,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         messageElement.innerHTML = `
             <span class="username" style="background-color: ${message.color}">${message.username}</span>
             <span class="text">${message.text}</span>
-            ${message.icon ? `<img src="${message.icon}" alt="File Icon" style="width: 50px; height: 50px;">` : ''}
             <span class="date">${message.date}</span>
         `;
         chatHistory.appendChild(messageElement);
@@ -115,7 +108,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             messageElement.innerHTML = `
                 <span class="username" style="background-color: ${message.color}">${message.username}</span>
                 <span class="text">${message.text}</span>
-                ${message.icon ? `<img src="${message.icon}" alt="File Icon" style="width: 50px; height: 50px;">` : ''}
                 <span class="date">${message.date}</span>
             `;
             chatHistory.appendChild(messageElement);
