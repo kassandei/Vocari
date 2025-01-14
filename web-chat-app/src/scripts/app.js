@@ -5,12 +5,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const usernameInput = document.getElementById('username-input');
     const chatHistory = document.getElementById('chat-history');
     const sendButton = document.getElementById('send-button');
+    const loginForm = document.getElementById('login-form');
+    const chatContainer = document.getElementById('chat-container');
 
     let username = '';
 
-    usernameInput.addEventListener('change', (event) => {
-        username = event.target.value;
-        usernameInput.disabled = true; // Disable the input after setting the username
+    loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        username = usernameInput.value;
+        if (username) {
+            usernameInput.disabled = true;
+            loginForm.style.display = 'none';
+            chatContainer.style.display = 'block';
+        }
     });
 
     sendButton.addEventListener('click', () => {
