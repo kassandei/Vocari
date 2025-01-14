@@ -302,3 +302,10 @@ footer {
         transform: translateY(0);
     }
 }
+
+/* Add a separator between the chatbox and input area */
+.chatbox {
+    background: #ffffff;
+    padding-bottom: 20px; /* Add padding to create space between chatbox and input area */
+    border-bottom: 2px solid #f9f9f9; /* Add a border to match the page's background color */
+}

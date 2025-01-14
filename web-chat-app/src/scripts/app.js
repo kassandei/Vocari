@@ -141,8 +141,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     toggleUsersButton.addEventListener('click', () => {
         if (onlineUsers.style.display === 'none') {
             onlineUsers.style.display = 'block';
-            onlineUsers.style.top = `${toggleUsersButton.offsetTop + toggleUsersButton.offsetHeight}px`;
-            onlineUsers.style.left = `${toggleUsersButton.offsetLeft}px`;
+            const rect = toggleUsersButton.getBoundingClientRect();
+            onlineUsers.style.top = `${rect.bottom + window.scrollY}px`;
+            onlineUsers.style.left = `${rect.left + window.scrollX}px`;
         } else {
             onlineUsers.style.display = 'none';
         }
