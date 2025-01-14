@@ -237,15 +237,18 @@ body {
 }
 
 /* Position the online users list to the left of the chatbox */
+/* Dropdown list */
 .online-users {
-    position: absolute; /* Position it relative to the container */
+    position: absolute;
+    top: 100%;    /* Appears right below the button */
+    left: 0;      /* Aligns with the left of the button */
     background: #ffffff;
     border: 1px solid #cccccc;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 10px;
-    display: none; /* Initially hide the user list */
-    z-index: 1000; /* Ensure it appears above other elements */
+    display: none; /* Hidden by default */
+    z-index: 1000;
 }
 
 .online-users h3 {
