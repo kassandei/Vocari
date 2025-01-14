@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const confirmSend = document.querySelector('#confirm-send');
     const cancelSend = document.querySelector('#cancel-send');
     const toggleUsersButton = document.querySelector('#toggle-users-button');
-    const onlineUsers = document.querySelector('.online-users');
+    const onlineUsers = document.querySelector('#online-users');
     const usersList = document.querySelector('#users-list');
 
     let username = '';
