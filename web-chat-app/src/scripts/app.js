@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const fileName = document.querySelector('#file-name');
     const confirmSend = document.querySelector('#confirm-send');
     const cancelSend = document.querySelector('#cancel-send');
-    const toggleUsersButton = document.querySelector('#toggle-users-button');
+    const toggleUsersButton = document.querySelector('#toggle-users');
     const onlineUsers = document.querySelector('#online-users');
     const usersList = document.querySelector('#users-list');
     const inputArea = document.querySelector('.input-area');
@@ -145,9 +145,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     toggleUsersButton.addEventListener('click', () => {
         if (onlineUsers.style.display === 'none' || onlineUsers.style.display === '') {
             onlineUsers.style.display = 'block';
-            const rect = toggleUsersButton.getBoundingClientRect();
-            onlineUsers.style.top = `${rect.bottom + window.scrollY}px`;
-            onlineUsers.style.left = `${rect.left + window.scrollX - onlineUsers.offsetWidth}px`;
+            const rect = chatContainer.getBoundingClientRect();
+            onlineUsers.style.top = `${rect.top + window.scrollY}px`;
+            onlineUsers.style.left = `${rect.left - onlineUsers.offsetWidth - 10 + window.scrollX}px`;
         } else {
             onlineUsers.style.display = 'none';
         }
