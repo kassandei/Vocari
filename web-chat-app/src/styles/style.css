@@ -83,6 +83,7 @@ body {
 /* Add a separator between the chatbox and input area */
 .chat-container {
     display: flex;
+    margin-top: 10px;
     flex-direction: column;
     height: 80vh;
     background: #ffffff;
