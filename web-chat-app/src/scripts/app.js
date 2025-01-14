@@ -1,18 +1,18 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const socket = io();
 
-    const messageInput = document.getElementById('message-input');
-    const usernameInput = document.getElementById('username-input');
-    const colorInput = document.getElementById('color-input');
-    const colorDisplay = document.getElementById('color-display');
-    const chatHistory = document.getElementById('chat-history');
-    const sendButton = document.getElementById('send-button');
-    const loginButton = document.getElementById('login-button');
+    const messageInput = document.querySelector('#message-input');
+    const usernameInput = document.querySelector('#username-input');
+    const colorInput = document.querySelector('#color-input');
+    const colorDisplay = document.querySelector('#color-display');
+    const chatHistory = document.querySelector('#chat-history');
+    const sendButton = document.querySelector('#send-button');
+    const loginButton = document.querySelector('#login-button');
     const emojiButton = document.getElementById('emoji-button');
     const emojiPicker = document.getElementById('emoji-picker');
-    const loginForm = document.getElementById('login-form');
-    const chatContainer = document.getElementById('chat-container');
-    const fileInput = document.getElementById('file-input');
+    const loginForm = document.querySelector('#login-form');
+    const chatContainer = document.querySelector('#chat-container');
+    const fileInput = document.querySelector('#file-input');
 
     let username = '';
     let userColor = '#000000';

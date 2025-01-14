@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Chat App</title>
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@nolanlawson/emoji-picker-element@1.0.0/dist/emoji-picker-element.js"></script>
 </head>
 <body>
@@ -12,7 +13,7 @@
         <div id="login-form" class="login-form">
             <h2>Login</h2>
             <input type="text" id="username-input" placeholder="Enter your username">
-            <input type="color" id="color-input" value="#000000" style="display: none;">
+            <input type="color" id="color-input" class="jscolor" value="#000000" style="display: none;">
             <div id="color-display" class="color-display"></div>
             <button id="login-button">Login</button>
         </div>
@@ -33,6 +34,7 @@
     </footer>
 
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
     <script src="scripts/app.js"></script>
 </body>
 </html>
