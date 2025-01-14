@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Chat</title>
+    <title>Web Chat App</title>
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <ul id="messages"></ul>
-    <form id="message-form" action="">
-        <input id="message-input" autocomplete="off" placeholder="Type your message here..." /><button>Send</button>
-    </form>
+    <div>
+        <input type="text" id="username-input" placeholder="Enter your username">
+    </div>
+    <div>
+        <input type="text" id="message-input" placeholder="Enter your message">
+        <button id="send-button">Send</button>
+    </div>
+    <div id="chat-history"></div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="scripts/app.js"></script>
 </body>
