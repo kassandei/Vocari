@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const messageInput = document.querySelector('#message-input');
     const usernameInput = document.querySelector('#username-input');
     const colorInput = document.querySelector('#color-input');
-    const colorDisplay = document.querySelector('#color-display');
     const chatHistory = document.querySelector('#chat-history');
     const sendButton = document.querySelector('#send-button');
     const loginButton = document.querySelector('#login-button');
@@ -22,7 +21,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     colorInput.addEventListener('input', (event) => {
         userColor = event.target.value;
-        colorDisplay.style.backgroundColor = userColor;
     });
 
     loginButton.addEventListener('click', (event) => {
