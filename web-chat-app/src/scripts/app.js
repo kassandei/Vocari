@@ -14,9 +14,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const fileName = document.querySelector('#file-name');
     const confirmSend = document.querySelector('#confirm-send');
     const cancelSend = document.querySelector('#cancel-send');
-    const toggleUsersButton = document.querySelector('#toggle-users');
-    const onlineUsers = document.querySelector('#online-users');
-    const usersList = document.querySelector('#users-list');
+    const toggleUsersButton = document.querySelector('#toggle-users-button');
+    const onlineUsers = document.querySelector('.online-users');
 
     let username = '';
     let userColor = '#000000';
