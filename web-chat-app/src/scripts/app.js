@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (username) {
             usernameInput.disabled = true;
             loginForm.style.display = 'none';
-            chatContainer.style.display = 'block';
+            chatContainer.style.display = 'flex';
         }
     });
 
@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         messageElement.classList.add('message');
         messageElement.textContent = `${message.username}: ${message.text}`;
         chatHistory.appendChild(messageElement);
+        chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
     });
 
     socket.on('chat history', (messages) => {
@@ -47,5 +48,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             messageElement.textContent = `${message.username}: ${message.text}`;
             chatHistory.appendChild(messageElement);
         });
+        chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
     });
 });
