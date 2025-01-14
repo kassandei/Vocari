@@ -5,12 +5,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const usernameInput = document.getElementById('username-input');
     const chatHistory = document.getElementById('chat-history');
     const sendButton = document.getElementById('send-button');
+    const loginButton = document.getElementById('login-button');
     const loginForm = document.getElementById('login-form');
     const chatContainer = document.getElementById('chat-container');
 
     let username = '';
 
-    loginForm.addEventListener('submit', (event) => {
+    loginButton.addEventListener('click', (event) => {
         event.preventDefault();
         username = usernameInput.value;
         if (username) {
