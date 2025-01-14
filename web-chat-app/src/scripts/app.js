@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const messageInput = document.getElementById('message-input');
     const usernameInput = document.getElementById('username-input');
     const colorInput = document.getElementById('color-input');
+    const colorDisplay = document.getElementById('color-display');
     const chatHistory = document.getElementById('chat-history');
     const sendButton = document.getElementById('send-button');
     const loginButton = document.getElementById('login-button');
@@ -14,10 +15,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let username = '';
     let userColor = '#000000';
 
+    colorInput.addEventListener('input', (event) => {
+        userColor = event.target.value;
+        colorDisplay.style.backgroundColor = userColor;
+    });
+
     loginButton.addEventListener('click', (event) => {
         event.preventDefault();
         username = usernameInput.value;
-        userColor = colorInput.value;
         if (username) {
             usernameInput.disabled = true;
             colorInput.disabled = true;
