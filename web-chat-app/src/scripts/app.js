@@ -137,9 +137,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     });
 
+    // Move the user list under the icon when pressed
     toggleUsersButton.addEventListener('click', () => {
         if (onlineUsers.style.display === 'none') {
             onlineUsers.style.display = 'block';
+            onlineUsers.style.top = `${toggleUsersButton.offsetTop + toggleUsersButton.offsetHeight}px`;
+            onlineUsers.style.right = `${window.innerWidth - toggleUsersButton.offsetLeft - toggleUsersButton.offsetWidth}px`;
         } else {
             onlineUsers.style.display = 'none';
         }
