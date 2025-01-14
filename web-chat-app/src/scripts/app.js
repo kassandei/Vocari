@@ -14,9 +14,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const fileName = document.querySelector('#file-name');
     const confirmSend = document.querySelector('#confirm-send');
     const cancelSend = document.querySelector('#cancel-send');
-    const toggleUsersButton = document.querySelector('#toggle-users');
-    const onlineUsers = document.querySelector('#online-users');
-    const usersList = document.querySelector('#users-list');
+    const toggleUsersButton = document.getElementById('toggle-users');
+    const onlineUsers = document.getElementById('online-users');
+    const usersList = document.getElementById('users-list');
     const inputArea = document.querySelector('.input-area');
 
     let username = '';
@@ -145,9 +145,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     toggleUsersButton.addEventListener('click', () => {
         if (onlineUsers.style.display === 'none' || onlineUsers.style.display === '') {
             onlineUsers.style.display = 'block';
-            const rect = toggleUsersButton.getBoundingClientRect();
-            onlineUsers.style.top = `${rect.bottom + window.scrollY}px`;
-            onlineUsers.style.left = `${rect.left + window.scrollX}px`;
         } else {
             onlineUsers.style.display = 'none';
         }
@@ -157,9 +154,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     socket.on('online users', (users) => {
         usersList.innerHTML = ''; // Clear the list
         users.forEach(user => {
-            const li = document.createElement('li');
-            li.textContent = user;
-            usersList.appendChild(li);
+            const userItem = document.createElement('li');
+            userItem.textContent = user;
+            usersList.appendChild(userItem);
         });
     });
+
+    // Ensure the onlineUsers element is styled to be visible
+    onlineUsers.style.position = 'absolute';
+    onlineUsers.style.backgroundColor = '#fff';
+    onlineUsers.style.border = '1px solid #ccc';
+    onlineUsers.style.padding = '10px';
+    onlineUsers.style.display = 'none'; // Initially hidden
 });
