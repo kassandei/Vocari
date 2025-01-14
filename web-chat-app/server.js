@@ -1,25 +1,11 @@
 const express = require('express');
-const https = require('https');
-const fs = require('fs');
+const http = require('http');
 const socketIo = require('socket.io');
 const path = require('path');
 
 const app = express();
-
-// Load SSL certificate and key
-const privateKey = fs.readFileSync('path/to/your/private.key', 'utf8');
-const certificate = fs.readFileSync('path/to/your/certificate.crt', 'utf8');
-const ca = fs.readFileSync('path/to/your/ca_bundle.crt', 'utf8');
-
-const credentials = {
-    key: privateKey,
-    cert: certificate,
-    ca: ca
-};
-
-// Create HTTPS server
-const httpsServer = https.createServer(credentials, app);
-const io = socketIo(httpsServer);
+const server = http.createServer(app);
+const io = socketIo(server);
 
 app.use(express.static(path.join(__dirname, 'src')));
 
@@ -34,6 +20,6 @@ io.on('connection', (socket) => {
     });
 });
 
-httpsServer.listen(443, () => {
-    console.log('listening on *:443');
+server.listen(80, () => {
+    console.log('listening on *:80');
 });
