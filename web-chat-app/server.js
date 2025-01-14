@@ -28,6 +28,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
+        console.log('user disconnected');
         if (socket.username) {
             users.delete(socket.username);
             io.emit('update users', Array.from(users)); // Update all clients with the new user list
@@ -40,6 +41,6 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(80, () => {
-    console.log('listening on *:80');
+server.listen(3000, () => {
+    console.log('listening on *:3000');
 });
