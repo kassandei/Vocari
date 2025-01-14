@@ -11,9 +11,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const loginForm = document.querySelector('#login-form');
     const chatContainer = document.querySelector('#chat-container');
     const fileInput = document.querySelector('#file-input');
+    const fileConfirmation = document.querySelector('#file-confirmation');
+    const fileName = document.querySelector('#file-name');
+    const confirmSend = document.querySelector('#confirm-send');
+    const cancelSend = document.querySelector('#cancel-send');
 
     let username = '';
     let userColor = '#000000';
+    let fileToSend = null;
 
     colorInput.addEventListener('input', (event) => {
         userColor = event.target.value;
@@ -46,6 +51,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 username: username,
                 text: messageInput.value,
                 color: userColor,
+                date: new Date().toLocaleString(),
             };
             socket.emit('chat message', message);
             messageInput.value = '';
@@ -55,26 +61,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fileInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file && username) {
+            fileToSend = file;
+            fileName.textContent = `Do you want to send the file "${file.name}"?`;
+            fileConfirmation.style.display = 'block';
+        }
+    });
+
+    confirmSend.addEventListener('click', () => {
+        if (fileToSend && username) {
             const reader = new FileReader();
             reader.onload = (e) => {
-                const confirmation = confirm(`Do you want to send the file "${file.name}"?`);
-                if (confirmation) {
-                    const message = {
-                        username: username,
-                        text: `<a href="${e.target.result}" download="${file.name}">${file.name}</a>`,
-                        color: userColor,
-                    };
-                    socket.emit('chat message', message);
-                }
+                const message = {
+                    username: username,
+                    text: `<a href="${e.target.result}" download="${fileToSend.name}">${fileToSend.name}</a>`,
+                    color: userColor,
+                    date: new Date().toLocaleString(),
+                };
+                socket.emit('chat message', message);
+                fileToSend = null;
+                fileConfirmation.style.display = 'none';
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(fileToSend);
         }
+    });
+
+    cancelSend.addEventListener('click', () => {
+        fileToSend = null;
+        fileConfirmation.style.display = 'none';
     });
 
     socket.on('chat message', (message) => {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message');
-        messageElement.innerHTML = `<span style="color: ${message.color}">${message.username}</span>: ${message.text}`;
+        messageElement.innerHTML = `<span style="color: ${message.color}">${message.username}</span>: ${message.text} <span class="date">${message.date}</span>`;
         chatHistory.appendChild(messageElement);
         chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
     });
@@ -84,7 +103,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         messages.forEach((message) => {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
-            messageElement.innerHTML = `<span style="color: ${message.color}">${message.username}</span>: ${message.text}`;
+            messageElement.innerHTML = `<span style="color: ${message.color}">${message.username}</span>: ${message.text} <span class="date">${message.date}</span>`;
             chatHistory.appendChild(messageElement);
         });
         chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
