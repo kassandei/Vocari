@@ -43,9 +43,9 @@ io.on('connection', (socket) => {
 });
 
 // Load SSL certificate and key
-const privateKey = fs.readFileSync(path.join(__dirname, 'vocari_me/vocari_me.pem'), 'utf8');
+const privateKey = fs.readFileSync(path.join(__dirname, 'vocari_me/private.key'), 'utf8');
 const certificate = fs.readFileSync(path.join(__dirname, 'vocari_me/vocari_me.crt'), 'utf8');
-const caBundle = fs.readFileSync(path.join(__dirname, 'vocari_me/vocari_me.ca-bundle'), 'utf8');
+const caBundle = fs.readFileSync(path.join(__dirname, 'vocari_me/vocari_me.pem'), 'utf8');
 
 const credentials = {
     key: privateKey,
