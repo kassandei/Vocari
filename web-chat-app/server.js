@@ -42,6 +42,14 @@ io.on('connection', (socket) => {
     });
 });
 
+// Redirect HTTP to HTTPS
+app.use((req, res, next) => {
+    if (!req.secure) {
+        return res.redirect(`https://${req.headers.host}${req.url}`);
+    }
+    next();
+});
+
 // Load SSL certificate and key
 const privateKey = fs.readFileSync(path.join(__dirname, 'vocari_me/private.key'), 'utf8');
 const certificate = fs.readFileSync(path.join(__dirname, 'vocari_me/vocari_me.crt'), 'utf8');
