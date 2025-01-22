@@ -1,5 +1,5 @@
 const express = require('express');
-const https = require('https');
+const http = require('http'); // Change from https to http
 const fs = require('fs');
 const socketIo = require('socket.io');
 const path = require('path');
@@ -11,23 +11,23 @@ app.use(express.static(path.join(__dirname, 'src')));
 
 let chatHistory = [];
 
-// Load SSL certificate and key
-const privateKey = fs.readFileSync(path.join(__dirname, 'vocari_me/private.key'), 'utf8');
-const certificate = fs.readFileSync(path.join(__dirname, 'vocari_me/vocari_me.crt'), 'utf8');
-const caBundle = fs.readFileSync(path.join(__dirname, 'vocari_me/vocari_me.pem'), 'utf8');
+// Load SSL certificate and key (no longer needed)
+// const privateKey = fs.readFileSync(path.join(__dirname, 'vocari_me/private.key'), 'utf8');
+// const certificate = fs.readFileSync(path.join(__dirname, 'vocari_me/vocari_me.crt'), 'utf8');
+// const caBundle = fs.readFileSync(path.join(__dirname, 'vocari_me/vocari_me.pem'), 'utf8');
 
-const credentials = {
-    key: privateKey,
-    cert: certificate,
-    ca: caBundle
-};
+// const credentials = {
+//     key: privateKey,
+//     cert: certificate,
+//     ca: caBundle
+// };
 
-// Create HTTPS server
-const httpsServer = https.createServer(credentials, app);
-const httpsIo = socketIo(httpsServer);
+// Create HTTP server
+const httpServer = http.createServer(app);
+const io = socketIo(httpServer);
 
-httpsIo.on('connection', (socket) => {
-    console.log('a user connected via HTTPS');
+io.on('connection', (socket) => {
+    console.log('a user connected via HTTP');
     socket.emit('chat history', chatHistory); // Send chat history to the new user
 
     socket.on('check username', (username, callback) => {
@@ -37,23 +37,24 @@ httpsIo.on('connection', (socket) => {
             users.add(username);
             socket.username = username;
             callback(true);
-            httpsIo.emit('update users', Array.from(users)); // Update all clients with the new user list
+            io.emit('update users', Array.from(users)); // Update all clients with the new user list
         }
     });
 
     socket.on('disconnect', () => {
         if (socket.username) {
             users.delete(socket.username);
-            httpsIo.emit('update users', Array.from(users)); // Update all clients with the new user list
+            io.emit('update users', Array.from(users)); // Update all clients with the new user list
         }
     });
 
     socket.on('chat message', (message) => {
         chatHistory.push(message);
-        httpsIo.emit('chat message', message);
+        io.emit('chat message', message);
     });
 });
 
-httpsServer.listen(443, () => {
-    console.log('HTTPS server listening on port 443');
+// Listen on port 3000
+httpServer.listen(3000, () => {
+    console.log('Server is running on port 3000');
 });
