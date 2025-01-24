@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     chatContainer.style.display = 'flex';
                     inputArea.style.display = 'flex'; // Show the input area
                     chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
+                    document.getElementById('game-buttons').style.display = 'none'; // Hide the game buttons
                 } else {
                     alert('Username is already taken. Please choose another one.');
                 }
@@ -46,11 +47,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         } else {
             alert('Username cannot be left empty.');
         }
-    });
-
-    document.getElementById('login-button').addEventListener('click', function() {
-        // Existing login logic...
-        document.getElementById('game-buttons').style.display = 'flex';
     });
 
     sendButton.addEventListener('click', sendMessage);
