@@ -27,8 +27,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         userColor = event.target.value;
     });
 
-    loginButton.addEventListener('click', (event) => {
-        event.preventDefault();
+    document.getElementById('login-button').addEventListener('click', function() {
         username = usernameInput.value.trim();
         if (username) {
             socket.emit('check username', username, (isAvailable) => {
