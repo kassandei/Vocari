@@ -52,10 +52,6 @@ io.on('connection', (socket) => {
     });
 });
 
-// Serve the new project directories
-app.use('/rock-paper-scissors', express.static(path.join(__dirname, 'src/games/rock-paper-scissors')));
-app.use('/sketch', express.static(path.join(__dirname, 'src/games/sketch')));
-
 // Listen on port 443
 httpsServer.listen(443, () => {
     console.log('Server is running on port 443');

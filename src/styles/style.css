@@ -323,6 +323,7 @@ footer {
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
+    text-align: center;
 }
 
 .game-button {
@@ -334,6 +335,7 @@ footer {
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s;
+    margin: 5px;
 }
 
 .game-button:hover {
