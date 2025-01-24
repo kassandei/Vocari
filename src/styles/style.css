@@ -327,9 +327,6 @@ footer {
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin-left: 20px;
 }
 
 .game-button {

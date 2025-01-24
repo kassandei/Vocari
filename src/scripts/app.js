@@ -48,6 +48,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
+    document.getElementById('login-button').addEventListener('click', function() {
+        // Existing login logic...
+        document.getElementById('game-buttons').style.display = 'flex';
+    });
+
     sendButton.addEventListener('click', sendMessage);
 
     messageInput.addEventListener('keydown', (event) => {
