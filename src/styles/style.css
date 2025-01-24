@@ -17,6 +17,10 @@ body {
     margin: auto;
     overflow: hidden;
     position: relative;
+    display: flex;
+    flex-direction: row; /* Change to row to align items horizontally */
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
 }
 
 .header {
@@ -320,12 +324,12 @@ footer {
 
 .game-buttons {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Change to column to stack buttons vertically */
+    justify-content: flex-start;
     gap: 10px;
-    margin-top: 10px;
+    margin-left: 20px; /* Add some space between chat box and buttons */
     text-align: center;
 }
-
 .game-button {
     padding: 10px 20px;
     background-color: #35424a;
