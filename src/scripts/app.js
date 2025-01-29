@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const color = registerColorInput.value;
 
         if (username && password) {
-            fetch('php/register.php', {
+            fetch('../php/register.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const password = loginPasswordInput.value.trim();
 
         if (username && password) {
-            fetch('php/login.php', {
+            fetch('../php/login.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
