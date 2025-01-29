@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const messageInput = document.querySelector('#message-input');
     const registerUsernameInput = document.querySelector('#register-username');
     const registerPasswordInput = document.querySelector('#register-password');
-    const registerColorInput = document.querySelector('#register-color');
     const loginUsernameInput = document.querySelector('#login-username');
     const loginPasswordInput = document.querySelector('#login-password');
     const chatHistory = document.querySelector('#chat-history');
@@ -28,9 +27,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let userColor = '#000000';
     let fileToSend = null;
 
-    registerColorInput.addEventListener('input', (event) => {
-        userColor = event.target.value;
-    });
 
     registerButton.addEventListener('click', function() {
         const username = document.getElementById('register-username').value.trim();
