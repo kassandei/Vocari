@@ -14,11 +14,10 @@ const users = new Set();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Use php-express to handle PHP files
-app.set('views', path.join(__dirname, 'src', 'php'));
-app.engine('php', phpExpress.engine);
-app.set('view engine', 'php');
+app.use('/php', phpExpress.router);
+
+// Serve static files from the 'src' directory
 app.use(express.static(path.join(__dirname, 'src')));
-app.all(/.+\.php$/, phpExpress.router);
 
 let chatHistory = [];
 
