@@ -33,27 +33,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     registerButton.addEventListener('click', function() {
-        const username = registerUsernameInput.value.trim();
-        const password = registerPasswordInput.value.trim();
-        const color = registerColorInput.value;
+        const username = document.getElementById('register-username').value.trim();
+        const password = document.getElementById('register-password').value.trim();
 
         if (username && password) {
             fetch('../php/register.php', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: `username=${username}&password=${password}&color=${color}`,
+                body: `username=${username}&password=${password}`
             })
             .then(response => response.text())
             .then(data => {
-                if (data === 'Registration successful') {
-                    alert('Registration successful. Please log in.');
-                    registerForm.style.display = 'none';
-                    loginForm.style.display = 'block';
-                } else {
-                    alert(data);
-                }
+                alert(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
         } else {
             alert('Username and password cannot be left empty.');

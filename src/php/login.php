@@ -1,31 +1,29 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "web_chat_app";
+include 'db.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    $stmt = $conn->prepare("SELECT password FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $stmt->store_result();
 
-$username = $_POST['username'];
-$password = $_POST['password'];
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($hashed_password);
+        $stmt->fetch();
 
-$sql = "SELECT * FROM users WHERE username='$username'";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    if (password_verify($password, $row['password'])) {
-        echo json_encode(['status' => 'success', 'color' => $row['color']]);
+        if (password_verify($password, $hashed_password)) {
+            echo "Login successful!";
+        } else {
+            echo "Invalid password.";
+        }
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Invalid password']);
+        echo "No user found with that username.";
     }
-} else {
-    echo json_encode(['status' => 'error', 'message' => 'User not found']);
-}
 
-$conn->close();
+    $stmt->close();
+    $conn->close();
+}
 ?>
