@@ -3,11 +3,13 @@ const https = require('https'); // Change from http to https
 const fs = require('fs');
 const socketIo = require('socket.io');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 const app = express();
 const users = new Set();
 
 app.use(express.static(path.join(__dirname, 'src')));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 let chatHistory = [];
 

@@ -2,11 +2,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const socket = io();
 
     const messageInput = document.querySelector('#message-input');
-    const usernameInput = document.querySelector('#username-input');
-    const colorInput = document.querySelector('#color-input');
+    const registerUsernameInput = document.querySelector('#register-username');
+    const registerPasswordInput = document.querySelector('#register-password');
+    const registerColorInput = document.querySelector('#register-color');
+    const loginUsernameInput = document.querySelector('#login-username');
+    const loginPasswordInput = document.querySelector('#login-password');
     const chatHistory = document.querySelector('#chat-history');
     const sendButton = document.querySelector('#send-button');
+    const registerButton = document.querySelector('#register-button');
     const loginButton = document.querySelector('#login-button');
+    const registerForm = document.querySelector('#register-form');
     const loginForm = document.querySelector('#login-form');
     const chatContainer = document.querySelector('#chat-container');
     const fileInput = document.querySelector('#file-input');
@@ -23,28 +28,67 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let userColor = '#000000';
     let fileToSend = null;
 
-    colorInput.addEventListener('input', (event) => {
+    registerColorInput.addEventListener('input', (event) => {
         userColor = event.target.value;
     });
 
-    document.getElementById('login-button').addEventListener('click', function() {
-        username = usernameInput.value.trim();
-        if (username) {
-            socket.emit('check username', username, (isAvailable) => {
-                if (isAvailable) {
-                    usernameInput.disabled = true;
-                    colorInput.disabled = true;
+    registerButton.addEventListener('click', function() {
+        const username = registerUsernameInput.value.trim();
+        const password = registerPasswordInput.value.trim();
+        const color = registerColorInput.value;
+
+        if (username && password) {
+            fetch('php/register.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `username=${username}&password=${password}&color=${color}`,
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'Registration successful') {
+                    alert('Registration successful. Please log in.');
+                    registerForm.style.display = 'none';
+                    loginForm.style.display = 'block';
+                } else {
+                    alert(data);
+                }
+            });
+        } else {
+            alert('Username and password cannot be left empty.');
+        }
+    });
+
+    loginButton.addEventListener('click', function() {
+        const username = loginUsernameInput.value.trim();
+        const password = loginPasswordInput.value.trim();
+
+        if (username && password) {
+            fetch('php/login.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `username=${username}&password=${password}`,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    userColor = data.color;
+                    loginUsernameInput.disabled = true;
+                    loginPasswordInput.disabled = true;
                     loginForm.style.display = 'none';
                     chatContainer.style.display = 'flex';
                     inputArea.style.display = 'flex'; // Show the input area
                     chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
                     document.getElementById('game-buttons').style.display = 'none'; // Hide the game buttons
                 } else {
-                    alert('Username is already taken. Please choose another one.');
+                    alert(data.message);
                 }
             });
         } else {
-            alert('Username cannot be left empty.');
+            alert('Username and password cannot be left empty.');
         }
     });
 
