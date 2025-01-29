@@ -1,15 +1,24 @@
 const express = require('express');
-const https = require('https'); // Change from http to https
+const https = require('https');
 const fs = require('fs');
 const socketIo = require('socket.io');
 const path = require('path');
 const bodyParser = require('body-parser');
+const phpExpress = require('php-express')({
+    binPath: 'php' // Adjust the path to your PHP binary if necessary
+});
 
 const app = express();
 const users = new Set();
 
-app.use(express.static(path.join(__dirname, 'src')));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Use php-express to handle PHP files
+app.set('views', path.join(__dirname, 'src', 'php'));
+app.engine('php', phpExpress.engine);
+app.set('view engine', 'php');
+app.use(express.static(path.join(__dirname, 'src')));
+app.all(/.+\.php$/, phpExpress.router);
 
 let chatHistory = [];
 
