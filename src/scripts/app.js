@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const usersList = document.querySelector('#users-list');
     const inputArea = document.querySelector('.input-area');
     const showLoginButton = document.querySelector('#show-login-button');
+    const showRegisterButton = document.querySelector('#show-register-button');
     const colorInput = document.querySelector('#color-input');
     const registerMessage = document.querySelector('#register-message');
     const loginMessage = document.querySelector('#login-message');
@@ -41,6 +42,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         showLoginButton.addEventListener('click', function() {
             registerForm.style.display = 'none';
             loginForm.style.display = 'block';
+        });
+    }
+
+    if (showRegisterButton) {
+        showRegisterButton.addEventListener('click', function() {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
         });
     }
 
