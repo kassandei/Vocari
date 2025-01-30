@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const password = document.getElementById('register-password').value.trim();
 
         if (username && password) {
-            fetch('register.php', {
+            fetch('http://localhost:8000/register.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const password = loginPasswordInput.value.trim();
 
         if (username && password) {
-            fetch('login.php', {
+            fetch('http://localhost:8000/login.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
