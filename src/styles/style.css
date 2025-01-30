@@ -162,9 +162,8 @@ body {
 }
 
 .msgSeparator {
-    height: 0; /* No actual height */
+    border-top: 1px solid rgb(229, 229, 229);
     border: none;
-    box-shadow: 0px 0.5px 0px rgba(234, 234, 234, 0.5); /* Creates a very thin line */
     width: 100%;
 }
 .input-area input[type="text"] {
