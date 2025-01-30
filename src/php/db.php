@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "your_password";
+$password = "";
 $dbname = "chat_app";
 
     // Create connection
