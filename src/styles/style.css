@@ -97,7 +97,8 @@ body {
 .chat-history {
     flex: 1;
     padding: 20px;
-    overflow-y: auto;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 100%; /* Ensure it doesn't exceed the container height */
 }
 
 .message {
