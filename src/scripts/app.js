@@ -22,74 +22,89 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const onlineUsers = document.querySelector('#online-users');
     const usersList = document.querySelector('#users-list');
     const inputArea = document.querySelector('.input-area');
-    const showLoginButton = document.querySelector('#show-login-button'); // Add this line
+    const showLoginButton = document.querySelector('#show-login-button');
+    const colorInput = document.querySelector('#color-input');
+    const registerMessage = document.querySelector('#register-message');
+    const loginMessage = document.querySelector('#login-message');
 
     let username = '';
     let userColor = '#000000';
     let fileToSend = null;
 
-    showLoginButton.addEventListener('click', function() {
-        registerForm.style.display = 'none';
-        loginForm.style.display = 'block';
-    });
+    if (colorInput) {
+        colorInput.addEventListener('input', (event) => {
+            userColor = event.target.value;
+        });
+    }
 
-    registerButton.addEventListener('click', function() {
-        const username = registerUsernameInput.value.trim();
-        const password = registerPasswordInput.value.trim();
+    if (showLoginButton) {
+        showLoginButton.addEventListener('click', function() {
+            registerForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+    }
 
-        if (username && password) {
-            fetch('/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username: username, password: password })
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert(data);
-                if (data === "Registration successful!") {
-                    registerForm.style.display = 'none';
-                    loginForm.style.display = 'block';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        } else {
-            alert('Username and password cannot be left empty.');
-        }
-    });
+    if (registerButton) {
+        registerButton.addEventListener('click', function() {
+            const username = registerUsernameInput.value.trim();
+            const password = registerPasswordInput.value.trim();
 
-    loginButton.addEventListener('click', function() {
-        const username = loginUsernameInput.value.trim();
-        const password = loginPasswordInput.value.trim();
+            if (username && password) {
+                fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: username, password: password })
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                    if (data === "Registration successful!") {
+                        registerForm.style.display = 'none';
+                        loginForm.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert('Username and password cannot be left empty.');
+            }
+        });
+    }
 
-        if (username && password) {
-            fetch('/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username: username, password: password })
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert(data);
-                if (data === "Login successful!") {
-                    loginForm.style.display = 'none';
-                    chatContainer.style.display = 'block';
-                    inputArea.style.display = 'flex';
-                    username = username;
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        } else {
-            alert('Username and password cannot be left empty.');
-        }
-    });
+    if (loginButton) {
+        loginButton.addEventListener('click', function() {
+            const usernameInput = loginUsernameInput.value.trim();
+            const password = loginPasswordInput.value.trim();
+
+            if (usernameInput && password) {
+                fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: usernameInput, password: password })
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                    if (data === "Login successful!") {
+                        loginForm.style.display = 'none';
+                        chatContainer.style.display = 'block';
+                        inputArea.style.display = 'flex';
+                        username = usernameInput;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert('Username and password cannot be left empty.');
+            }
+        });
+    }
 
     sendButton.addEventListener('click', sendMessage);
 
