@@ -22,15 +22,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const onlineUsers = document.querySelector('#online-users');
     const usersList = document.querySelector('#users-list');
     const inputArea = document.querySelector('.input-area');
+    const showLoginButton = document.querySelector('#show-login-button'); // Add this line
 
     let username = '';
     let userColor = '#000000';
     let fileToSend = null;
 
+    showLoginButton.addEventListener('click', function() {
+        registerForm.style.display = 'none';
+        loginForm.style.display = 'block';
+    });
 
     registerButton.addEventListener('click', function() {
-        const username = document.getElementById('register-username').value.trim();
-        const password = document.getElementById('register-password').value.trim();
+        const username = registerUsernameInput.value.trim();
+        const password = registerPasswordInput.value.trim();
 
         if (username && password) {
             fetch('/register', {
@@ -43,6 +48,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             .then(response => response.text())
             .then(data => {
                 alert(data);
+                if (data === "Registration successful!") {
+                    registerForm.style.display = 'none';
+                    loginForm.style.display = 'block';
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -53,8 +62,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     loginButton.addEventListener('click', function() {
-        const username = document.getElementById('login-username').value.trim();
-        const password = document.getElementById('login-password').value.trim();
+        const username = loginUsernameInput.value.trim();
+        const password = loginPasswordInput.value.trim();
 
         if (username && password) {
             fetch('/login', {
@@ -67,6 +76,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
             .then(response => response.text())
             .then(data => {
                 alert(data);
+                if (data === "Login successful!") {
+                    loginForm.style.display = 'none';
+                    chatContainer.style.display = 'block';
+                    inputArea.style.display = 'flex';
+                    username = username;
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -98,7 +113,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
-    // Fix file upload to send as a downloadable link
     fileInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file && username) {
@@ -141,11 +155,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             <span class="date">${message.date}</span>
         `;
         chatHistory.appendChild(messageElement);
-        chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
+        chatHistory.scrollTop = chatHistory.scrollHeight;
     });
 
     socket.on('chat history', (messages) => {
-        chatHistory.innerHTML = ''; // Clear existing messages
+        chatHistory.innerHTML = '';
         messages.forEach((message) => {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
@@ -157,7 +171,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             `;
             chatHistory.appendChild(messageElement);
         });
-        chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
+        chatHistory.scrollTop = chatHistory.scrollHeight;
     });
 
     socket.on('update users', (users) => {
@@ -169,7 +183,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     });
 
-    // Move the user list under and to the left of the button when pressed
     toggleUsersButton.addEventListener('click', () => {
         if (onlineUsers.style.display === 'none' || onlineUsers.style.display === '') {
             onlineUsers.style.display = 'block';
@@ -181,9 +194,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    // Handle receiving the list of online users
     socket.on('online users', (users) => {
-        usersList.innerHTML = ''; // Clear the list
+        usersList.innerHTML = '';
         users.forEach(user => {
             const li = document.createElement('li');
             li.textContent = user;

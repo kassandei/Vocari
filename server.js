@@ -5,14 +5,14 @@ const socketIo = require('socket.io');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-const axios = require('axios'); // Add this line
+const axios = require('axios');
 
 const app = express();
 const users = new Set();
 
 app.use(express.static(path.join(__dirname, 'src')));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json()); // Add this line to parse JSON bodies
+app.use(bodyParser.json());
 
 let chatHistory = [];
 
