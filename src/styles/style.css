@@ -161,6 +161,9 @@ body {
     border: none; /* Remove any border */
 }
 
+.msgSeparator {
+    border: solid 1px rgb(220, 219, 219);
+}
 .input-area input[type="text"] {
     flex: 1;
     padding: 12px;
