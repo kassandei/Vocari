@@ -83,12 +83,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     },
                     body: JSON.stringify({ username: username, password: password })
                 })
-                .then(response => response.text())
+                .then(response => response.json())
                 .then(data => {
-                    showNotification(data);
-                    if (data === "Registration successful!") {
+                    if (data.success) {
+                        showNotification("Registration successful!");
                         registerForm.style.display = 'none';
                         loginForm.style.display = 'block';
+                    } else {
+                        showNotification(data.message || "Registration failed.");
                     }
                 })
                 .catch(error => {
@@ -120,14 +122,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     },
                     body: JSON.stringify({ username: usernameInput, password: password })
                 })
-                .then(response => response.text())
+                .then(response => response.json())
                 .then(data => {
-                    showNotification(data);
-                    if (data === "Login successful!") {
+                    if (data.success) {
+                        showNotification("Login successful!");
                         loginForm.style.display = 'none';
                         chatContainer.style.display = 'block';
                         inputArea.style.display = 'flex';
                         username = usernameInput;
+                        socket.emit('check username', username, (isAvailable) => {
+                            if (isAvailable) {
+                                console.log('Username is available and set.');
+                            } else {
+                                console.log('Username is already taken.');
+                            }
+                        });
+                    } else {
+                        showNotification(data.message || "Login failed.");
                     }
                 })
                 .catch(error => {
@@ -209,6 +220,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             ${message.icon ? `<img src="${message.icon}" alt="File Icon" class="file-icon">` : ''}
             <span class="date">${message.date}</span>
         `;
+        const separator = document.createElement('hr');
+        separator.style.border = 'none';
+        separator.style.borderTop = '1px solid #ccc';
+        separator.style.margin = '10px 0';
+        messageElement.appendChild(separator);
         chatHistory.appendChild(messageElement);
         chatHistory.scrollTop = chatHistory.scrollHeight;
     });
@@ -223,8 +239,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 <span class="text">${message.text}</span>
                 ${message.icon ? `<img src="${message.icon}" alt="File Icon" class="file-icon">` : ''}
                 <span class="date">${message.date}</span>
-                <hr>
             `;
+            const separator = document.createElement('hr');
+            separator.style.border = 'none';
+            separator.style.borderTop = '1px solid #ccc';
+            separator.style.margin = '10px 0';
+            messageElement.appendChild(separator);
             chatHistory.appendChild(messageElement);
         });
         chatHistory.scrollTop = chatHistory.scrollHeight;
