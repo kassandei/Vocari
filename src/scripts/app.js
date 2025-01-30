@@ -223,6 +223,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 <span class="text">${message.text}</span>
                 ${message.icon ? `<img src="${message.icon}" alt="File Icon" class="file-icon">` : ''}
                 <span class="date">${message.date}</span>
+                <hr>
             `;
             chatHistory.appendChild(messageElement);
         });
