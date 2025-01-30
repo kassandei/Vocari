@@ -162,8 +162,7 @@ body {
 }
 
 .msgSeparator {
-    border-top: 1px solid rgb(229, 229, 229);
-    border: none;
+    border-top: 1px solid rgb(255, 255, 255);
     width: 100%;
 }
 .input-area input[type="text"] {
