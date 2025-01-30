@@ -1,42 +1,39 @@
-# Web Chat Application
+# Vocari - A Simple Web Chat
 
-This is a simple web chat application that allows users to log in with a username, exchange messages in real-time, and view the chat history even after reconnecting.
+Vocari is a lightweight web chat app where users can log in with a username, send real-time messages, and access chat history even after reconnecting.
 
 ## Project Structure
 
 ```
-web-chat-app
+Vocari
 ├── src
-│   ├── index.html        # Main HTML document for the chat interface
+│   ├── index.html        # Chat interface
 │   ├── styles
-│   │   └── style.css     # CSS styles for the chat application
-│   └── scripts
-│       └── app.js        # JavaScript code for handling chat functionality
-├── server.js             # Server-side code for managing connections and messages
-└── README.md             # Documentation for the project
+│   │   └── style.css     # Styling for the chat
+│   ├── scripts
+│   │   └── app.js        # Handles chat functionality
+│   ├── php
+│   │   ├── db.php       # Database connection
+│   │   ├── login.php    # Handles user login
+│   │   ├── register.php # Handles user registration
+│
+├── server.js             # Manages connections and messages
+└── README.md             # Project documentation
 ```
 
-## Setup Instructions
+## How It Works
 
-1. Clone the repository to your local machine.
-2. Navigate to the project directory.
-3. Install the necessary dependencies by running:
-   ```
-   npm install
-   ```
-4. Start the server by executing:
-   ```
-   node server.js
-   ```
-5. Open your web browser and go to `http://vocari.me`.
+The app runs on [vocari.me](https://vocari.me) using Node.js on port 443. The frontend is built with plain HTML, CSS, and JavaScript, interacting with the DOM for real-time updates. Socket.io and Express handle messaging, while PHP with MariaDB (running on localhost via phpwebserver) manages user authentication and chat history. Axios bridges communication between Node.js and the PHP backend.
 
-## Usage Guidelines
+## Usage
 
-- Enter a username to log in.
-- Type your message in the input field and press Enter to send.
-- All connected users will see the messages in real-time.
-- The chat history will persist even if you disconnect and reconnect.
+- First, register an account.
+- Enter your username and log in.
+- Type your message and hit Enter to send.
+- Messages update in real-time for all users.
+- Chat history is saved even if you disconnect.
 
 ## Contributing
 
-Feel free to submit issues or pull requests if you have suggestions or improvements for the project.
+Got ideas or improvements? Feel free to open an issue or submit a pull request!
+
