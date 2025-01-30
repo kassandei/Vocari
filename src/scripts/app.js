@@ -33,12 +33,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const password = document.getElementById('register-password').value.trim();
 
         if (username && password) {
-            fetch('http://localhost:8000/register.php', {
+            fetch('/register', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 },
-                body: `username=${username}&password=${password}`
+                body: JSON.stringify({ username: username, password: password })
             })
             .then(response => response.text())
             .then(data => {
@@ -53,31 +53,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     loginButton.addEventListener('click', function() {
-        const username = loginUsernameInput.value.trim();
-        const password = loginPasswordInput.value.trim();
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value.trim();
 
         if (username && password) {
-            fetch('http://localhost:8000/login.php', {
+            fetch('/login', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/json'
                 },
-                body: `username=${username}&password=${password}`,
+                body: JSON.stringify({ username: username, password: password })
             })
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data => {
-                if (data.status === 'success') {
-                    userColor = data.color;
-                    loginUsernameInput.disabled = true;
-                    loginPasswordInput.disabled = true;
-                    loginForm.style.display = 'none';
-                    chatContainer.style.display = 'flex';
-                    inputArea.style.display = 'flex'; // Show the input area
-                    chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
-                    document.getElementById('game-buttons').style.display = 'none'; // Hide the game buttons
-                } else {
-                    alert(data.message);
-                }
+                alert(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
         } else {
             alert('Username and password cannot be left empty.');

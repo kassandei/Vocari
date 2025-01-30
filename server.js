@@ -5,12 +5,14 @@ const socketIo = require('socket.io');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const axios = require('axios'); // Add this line
 
 const app = express();
 const users = new Set();
 
 app.use(express.static(path.join(__dirname, 'src')));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); // Add this line to parse JSON bodies
 
 let chatHistory = [];
 
@@ -29,12 +31,42 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'chat_app'
+    database: 'webchat'
 });
 
 db.connect((err) => {
     if (err) throw err;
     console.log('Connected to database');
+});
+
+app.post('/register', (req, res) => {
+    const { username, password } = req.body;
+
+    axios.post('http://localhost:8000/php/register.php', {
+        username: username,
+        password: password
+    })
+    .then(response => {
+        res.send(response.data);
+    })
+    .catch(error => {
+        res.status(500).send('Error: ' + error.message);
+    });
+});
+
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    axios.post('http://localhost:8000/php/login.php', {
+        username: username,
+        password: password
+    })
+    .then(response => {
+        res.send(response.data);
+    })
+    .catch(error => {
+        res.status(500).send('Error: ' + error.message);
+    });
 });
 
 io.on('connection', (socket) => {
