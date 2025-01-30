@@ -52,6 +52,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.classList.add('notification');
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 1000);
+    }
+
     if (registerButton) {
         registerButton.addEventListener('click', function() {
             const username = registerUsernameInput.value.trim();
@@ -67,7 +85,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 })
                 .then(response => response.text())
                 .then(data => {
-                    alert(data);
+                    showNotification(data);
                     if (data === "Registration successful!") {
                         registerForm.style.display = 'none';
                         loginForm.style.display = 'block';
@@ -77,7 +95,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     console.error('Error:', error);
                 });
             } else {
-                alert('Username and password cannot be left empty.');
+                showNotification('Username and password cannot be left empty.');
+            }
+        });
+
+        registerForm.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && registerUsernameInput.value.trim() && registerPasswordInput.value.trim()) {
+                event.preventDefault();
+                registerButton.click();
             }
         });
     }
@@ -97,7 +122,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 })
                 .then(response => response.text())
                 .then(data => {
-                    alert(data);
+                    showNotification(data);
                     if (data === "Login successful!") {
                         loginForm.style.display = 'none';
                         chatContainer.style.display = 'block';
@@ -109,7 +134,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     console.error('Error:', error);
                 });
             } else {
-                alert('Username and password cannot be left empty.');
+                showNotification('Username and password cannot be left empty.');
+            }
+        });
+
+        loginForm.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && loginUsernameInput.value.trim() && loginPasswordInput.value.trim()) {
+                event.preventDefault();
+                loginButton.click();
             }
         });
     }
