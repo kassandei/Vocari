@@ -41,9 +41,10 @@ body {
 
 .login-inputs {
     display: flex;
+    flex-direction: column; /* Cambiato da orizzontale a verticale */
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 10px; /* Mantieni lo spazio tra gli elementi */
 }
 
 .login-form input {
