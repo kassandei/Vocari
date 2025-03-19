@@ -17,12 +17,6 @@ body {
     margin: auto;
     overflow: hidden;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    gap: 20px; /* Spazio tra i form */
 }
 
 .header {
@@ -32,64 +26,44 @@ body {
     text-align: center;
 }
 
-/* Miglioramento dello stile per i form di registrazione e login */
 .login-form {
     background: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-bottom: 20px; /* Spazio tra i form */
-    width: 100%;
-    max-width: 400px;
     animation: fadeIn 1s ease-in-out;
 }
 
 .login-form h2 {
     margin-bottom: 20px;
-    font-size: 24px;
-    color: #35424a;
 }
 
 .login-inputs {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .login-form input {
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #cccccc;
-    border-radius: 5px;
-    font-size: 16px;
-    text-align: center;
-    transition: border-color 0.3s ease;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    text-align: center; /* Center the text in the input fields */
 }
 
-.login-form input:focus {
-    border-color: #35424a;
-    outline: none;
+#username-input {
+    width: 200px;
 }
 
-.login-form button {
-    padding: 12px 20px;
-    background-color: #35424a;
-    color: #ffffff;
+#color-input {
+    width: 40px;
+    height: 40px;
+    padding: 0;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.login-form button:hover {
-    background-color: #2c3e50;
-}
-
-#register-form, #login-form {
-    margin: 0 auto;
-    display: block;
 }
 
 .login-form button {
