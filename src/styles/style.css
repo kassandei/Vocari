@@ -44,27 +44,14 @@ body {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    flex-direction: column;
 }
 
 .login-form input {
-    padding: 2%;
-    padding-left: 8%;
-    padding-right: 8%;
+    padding: 10px;
     border: 1px solid #cccccc;
     border-radius: 4px;
     margin-bottom: 10px;
     text-align: center; /* Center the text in the input fields */
-}
-
-.registra {
-    color: black;
-}
-
-.registra:hover {
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
 }
 
 #username-input {
@@ -179,7 +166,6 @@ body {
     border-top: 1px solid rgb(255, 255, 255);
     width: 100%;
 }
-
 .input-area input[type="text"] {
     flex: 1;
     padding: 12px;
@@ -269,6 +255,7 @@ body {
     z-index: 1000;           /* Ensure it stays above other elements */
 }
 
+
 .online-users h3 {
     margin: 0 0 10px 0;
 }
@@ -331,6 +318,7 @@ footer {
     background: #ffffff;
     padding-bottom: 20px; /* Add padding to create space between chatbox and input area */
     border-bottom: 2px solid #f9f9f9; /* Add a border to match the page's background color */
+
 }
 
 /* .game-buttons {
