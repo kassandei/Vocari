@@ -80,25 +80,25 @@ body {
     background-color: #2c3e50;
 }
 
-/* Modifica per evitare che la chat diventi troppo piccola */
+/* Add a separator between the chatbox and input area */
 .chat-container {
     display: flex;
+    margin-top: 10px;
     flex-direction: column;
-    height: auto; /* Cambiato da 80vh a auto */
-    min-height: 400px; /* Imposta un'altezza minima */
+    height: 80vh;
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     border: 1px solid #cccccc;
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Add margin to separate from the input area */
 }
 
 .chat-history {
     flex: 1;
     padding: 20px;
-    overflow-y: auto; /* Mantieni lo scrolling verticale */
-    max-height: none; /* Rimuovi il limite massimo di altezza */
+    overflow-y: scroll; /* Enable vertical scrolling */
+    max-height: 100%; /* Ensure it doesn't exceed the container height */
 }
 
 .message {
