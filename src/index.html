@@ -4,59 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>VOCARI</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <div id="register-form" class="login-form">
+        <!-- Login Form (Mostrato di Default) -->
+        <div id="login-form" class="login-form">
+            <h2>Login</h2>
+            <div class="login-inputs">
+                <input type="text" id="login-username" placeholder="Enter your username">
+                <input type="password" id="login-password" placeholder="Enter your password">
+            </div>
+            <button id="login-button">Login</button>
+            <p>Non hai un account? <a id="show-register-button" class="registra">Registrati</a></p>
+            <p id="login-message"></p>
+        </div>
+
+        <!-- Register Form (Nascosto all'inizio) -->
+        <div id="register-form" class="login-form" style="display: none;">
             <h2>Register</h2>
             <div class="login-inputs">
                 <input type="text" id="register-username" placeholder="Enter your username">
                 <input type="password" id="register-password" placeholder="Enter your password">
             </div>
             <button id="register-button">Register</button>
-            <button id="show-login-button">Login</button>
+            <p>Hai già un account? <a id="show-login-button" class="registra">Login</a></p>
             <p id="register-message"></p>
         </div>
-        <div id="login-form" class="login-form" style="display: none;">
-            <h2>Login</h2>
-            <div class="login-inputs">
-                <input type="text" id="login-username" placeholder="Enter your username">
-                <input type="password" id="login-password" placeholder="Enter your password">
-                <input type="color" id="color-input" value="#000000"> <!-- Add color input here -->
-            </div>
-            <button id="login-button">Login</button>
-            <button id="show-register-button">Register</button> <!-- Add register button here -->
-            <p id="login-message"></p>
-        </div>
+
+        <!-- Chat Container (Nascosto inizialmente) -->
         <div id="chat-container" class="chat-container" style="display: none;">
             <div id="chat-history" class="chat-history"></div>
+            <input type="text" id="message-input" placeholder="Enter your message">
+            <button id="send-message">Send</button>
         </div>
+
+        <!-- Online Users -->
         <div id="online-users" class="online-users">
             <h3>Online Users</h3>
             <ul id="users-list"></ul>
         </div>
     </div>
-    <!-- <button id="toggle-users" class="toggle-users">👥</button> -->
-    
-    <div id="file-confirmation" class="file-confirmation" style="display: none;">
-        <p id="file-name"></p>
-        <button id="confirm-send">Send</button>
-        <button id="cancel-send">Cancel</button>
-    </div>
-    <div class="input-area" style="display: none;">
-        <input type="text" id="message-input" placeholder="Enter your message">
-        <label for="file-input" class="file-label">📎</label>
-        <input type="file" id="file-input" style="display: none;">
-        <button id="send-button">Send</button>
-    </div>
-
-    <footer>
-        <p>Guarda il progetto su <a href="https://github.com/kassandei/serverARM" target="_blank">GitHub</a></p>
-    </footer>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="scripts/app.js"></script>
+
+    <script>
+        // JavaScript for handling form toggles
+        document.getElementById('show-register-button').addEventListener('click', function() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+        });
+
+        document.getElementById('show-login-button').addEventListener('click', function() {
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        });
+
+        // Handle login button click
+        document.getElementById('login-button').addEventListener('click', function() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            // Simulating a login (this should be done with a backend request)
+            if (username && password) {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('chat-container').style.display = 'block';
+                // Update the chat with a welcome message (for example)
+                document.getElementById('chat-history').innerHTML += `<p>Welcome ${username}!</p>`;
+            } else {
+                document.getElementById('login-message').innerText = 'Please fill in both fields.';
+            }
+        });
+
+        // Handle register button click
+        document.getElementById('register-button').addEventListener('click', function() {
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+
+            // Simulating a registration (this should be done with a backend request)
+            if (username && password) {
+                document.getElementById('register-form').style.display = 'none';
+                document.getElementById('chat-container').style.display = 'block';
+                document.getElementById('chat-history').innerHTML += `<p>Welcome, ${username}, you are now registered!</p>`;
+            } else {
+                document.getElementById('register-message').innerText = 'Please fill in both fields.';
+            }
+        });
+
+        // Optionally add some socket.io or AJAX calls here for real-time functionality
+    </script>
 </body>
 </html>
