@@ -12,6 +12,7 @@ body {
 }
 
 .container {
+    width: 80%;
     max-width: 800px;
     margin: auto;
     overflow: hidden;
