@@ -363,3 +363,20 @@ footer {
     opacity: 1;
     transform: translateX(-50%) translateY(10px);
 }
+
+.switch-section {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #35424a;
+    text-align: center;
+}
+
+.switch-section a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.switch-section a:hover {
+    text-decoration: underline;
+}
