@@ -85,8 +85,8 @@ body {
 .chat-container {
     display: flex;
     flex-direction: column;
-    height: auto; /* Cambiato da 80vh a auto */
-    min-height: 400px; /* Imposta un'altezza minima */
+    height: 500px; /* Imposta un'altezza fissa */
+    max-height: 80vh; /* Limita l'altezza massima */
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -98,8 +98,11 @@ body {
 .chat-history {
     flex: 1;
     padding: 20px;
-    overflow-y: auto; /* Mantieni lo scrolling verticale */
-    max-height: none; /* Rimuovi il limite massimo di altezza */
+    overflow-y: auto; /* Abilita lo scrolling verticale */
+    max-height: calc(100% - 20px); /* Assicura che non superi il contenitore */
+    word-wrap: break-word; /* Gestisce i messaggi lunghi */
+    white-space: pre-wrap; /* Mantiene gli spazi e va a capo */
+    background-color: #f9f9f9; /* Colore di sfondo per i messaggi */
 }
 
 .message {
