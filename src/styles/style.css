@@ -85,7 +85,9 @@ body {
 .chat-container {
     display: flex;
     flex-direction: column;
-    height: 500px; /* Imposta un'altezza fissa */
+    height: 70vh; /* Altezza relativa al 70% dell'altezza dello schermo */
+    width: 90%; /* Larghezza relativa al 90% della larghezza dello schermo */
+    max-width: 800px; /* Limita la larghezza massima */
     max-height: 80vh; /* Limita l'altezza massima */
     background: #ffffff;
     border-radius: 8px;
