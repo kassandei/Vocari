@@ -60,7 +60,7 @@ body {
 }
 
 #color-input {
-    width: 100px; /* Aumenta la larghezza */
+    width: 40px;
     height: 40px;
     padding: 0;
     border: none;
@@ -81,25 +81,25 @@ body {
     background-color: #2c3e50;
 }
 
-/* Add a separator between the chatbox and input area */
+/* Modifica per evitare che la chat diventi troppo piccola */
 .chat-container {
     display: flex;
-    margin-top: 10px;
     flex-direction: column;
-    height: 80vh;
+    height: auto; /* Cambiato da 80vh a auto */
+    min-height: 400px; /* Imposta un'altezza minima */
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     border: 1px solid #cccccc;
-    margin-bottom: 20px; /* Add margin to separate from the input area */
+    margin-bottom: 20px;
 }
 
 .chat-history {
     flex: 1;
     padding: 20px;
-    overflow-y: scroll; /* Enable vertical scrolling */
-    max-height: 100%; /* Ensure it doesn't exceed the container height */
+    overflow-y: auto; /* Mantieni lo scrolling verticale */
+    max-height: none; /* Rimuovi il limite massimo di altezza */
 }
 
 .message {
@@ -362,21 +362,4 @@ footer {
 .notification.show {
     opacity: 1;
     transform: translateX(-50%) translateY(10px);
-}
-
-.switch-section {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #35424a;
-    text-align: center;
-}
-
-.switch-section a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.switch-section a:hover {
-    text-decoration: underline;
 }
