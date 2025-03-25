@@ -40,11 +40,11 @@ body {
 }
 
 .login-inputs {
-    display: flex; /* Cambia da colonna a riga */
-    flex-direction: row; /* Disposizione orizzontale */
+    display: flex;
+    flex-direction: column; /* Cambiato da orizzontale a verticale */
     justify-content: center;
     align-items: center;
-    gap: 10px; /* Spazio tra gli elementi */
+    gap: 10px; /* Mantieni lo spazio tra gli elementi */
 }
 
 .login-form input {
