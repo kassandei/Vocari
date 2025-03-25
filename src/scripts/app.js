@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 username: username,
                 text: messageInput.value,
                 color: userColor,
-                date: new Date().toLocaleString(),
+                date: new Date().toISOString(), // Usa l'orario UTC in formato ISO
             };
             socket.emit('chat message', message);
             messageInput.value = '';
@@ -215,11 +215,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     socket.on('chat message', (message) => {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message');
+        const messageDate = new Date(message.date).toLocaleString('en-GB', { timeZone: 'UTC' }); // Mostra l'orario in UTC
         messageElement.innerHTML = `
             <span class="username" style="background-color: ${message.color}">${message.username}</span>
             <span class="text">${message.text}</span>
             ${message.icon ? `<img src="${message.icon}" alt="File Icon" class="file-icon">` : ''}
-            <span class="date">${message.date}</span>
+            <span class="date">${messageDate}</span>
             <hr class="msgSeparator">
         `;
         chatHistory.appendChild(messageElement);
