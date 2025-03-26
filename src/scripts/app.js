@@ -32,12 +32,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const roomInput = document.createElement('input');
     const createRoomButton = document.createElement('button');
     const roomContainer = document.createElement('div');
+    const roomPasswordInput = document.createElement('input');
+    const joinRoomButton = document.createElement('button');
 
     roomInput.placeholder = 'Enter room name';
+    roomPasswordInput.placeholder = 'Enter room password';
     createRoomButton.textContent = 'Create Room';
+    joinRoomButton.textContent = 'Join Room';
     roomContainer.appendChild(roomSelect);
     roomContainer.appendChild(roomInput);
+    roomContainer.appendChild(roomPasswordInput);
     roomContainer.appendChild(createRoomButton);
+    roomContainer.appendChild(joinRoomButton);
     document.body.insertBefore(roomContainer, document.querySelector('.container'));
 
     let currentRoom = 'default';
@@ -45,12 +51,42 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     createRoomButton.addEventListener('click', () => {
         const newRoom = roomInput.value.trim();
-        if (newRoom && !Array.from(roomSelect.options).some(option => option.value === newRoom)) {
-            const option = document.createElement('option');
-            option.value = newRoom;
-            option.textContent = newRoom;
-            roomSelect.appendChild(option);
-            roomInput.value = '';
+        const roomPassword = document.querySelector('#room-password').value.trim();
+
+        if (newRoom && roomPassword) {
+            socket.emit('create room', { room: newRoom, password: roomPassword }, (success, message) => {
+                if (success) {
+                    const option = document.createElement('option');
+                    option.value = newRoom;
+                    option.textContent = newRoom;
+                    roomSelect.appendChild(option);
+                    roomInput.value = '';
+                    document.querySelector('#room-password').value = '';
+                    showNotification('Room created successfully!');
+                } else {
+                    showNotification(message);
+                }
+            });
+        } else {
+            showNotification('Room name and password cannot be empty.');
+        }
+    });
+
+    joinRoomButton.addEventListener('click', () => {
+        const selectedRoom = roomSelect.value;
+        const roomPassword = document.querySelector('#room-password').value.trim();
+
+        if (selectedRoom && roomPassword) {
+            socket.emit('join room with password', { room: selectedRoom, password: roomPassword }, (success, message) => {
+                if (success) {
+                    currentRoom = selectedRoom;
+                    showNotification('Joined room successfully!');
+                } else {
+                    showNotification(message);
+                }
+            });
+        } else {
+            showNotification('Please select a room and enter the password.');
         }
     });
 

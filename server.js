@@ -69,6 +69,8 @@ app.post('/login', (req, res) => {
     });
 });
 
+const rooms = {};
+
 io.on('connection', (socket) => {
     console.log('a user connected via HTTPS');
 
@@ -96,10 +98,39 @@ io.on('connection', (socket) => {
         });
     });
 
+    socket.on('create room', ({ room, password }, callback) => {
+        if (rooms[room]) {
+            callback(false, 'Room already exists.');
+        } else {
+            rooms[room] = { password, users: [] };
+            callback(true, 'Room created successfully.');
+        }
+    });
+
+    socket.on('join room with password', ({ room, password }, callback) => {
+        if (rooms[room]) {
+            if (rooms[room].password === password) {
+                socket.join(room);
+                rooms[room].users.push(socket.id);
+                callback(true, 'Joined room successfully.');
+            } else {
+                callback(false, 'Incorrect password.');
+            }
+        } else {
+            callback(false, 'Room does not exist.');
+        }
+    });
+
     socket.on('disconnect', () => {
         if (socket.username) {
             users.delete(socket.username);
             io.emit('update users', Array.from(users));
+        }
+        for (const room in rooms) {
+            rooms[room].users = rooms[room].users.filter((id) => id !== socket.id);
+            if (rooms[room].users.length === 0) {
+                delete rooms[room];
+            }
         }
     });
 
