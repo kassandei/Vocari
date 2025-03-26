@@ -240,10 +240,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function sendMessage() {
         if (messageInput.value && username) {
             const message = {
+                room: currentRoom,
                 username: username,
                 text: messageInput.value,
                 color: userColor,
-                date: new Date().toISOString(), // Usa l'orario UTC in formato ISO
+                date: new Date().toISOString(),
             };
             socket.emit('chat message', message);
             messageInput.value = '';
@@ -283,18 +284,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     socket.on('chat message', (message) => {
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message');
-        const messageDate = new Date(message.date).toLocaleString('en-GB', { timeZone: 'UTC' }); // Mostra l'orario in UTC
-        messageElement.innerHTML = `
-            <span class="username" style="background-color: ${message.color}">${message.username}</span>
-            <span class="text">${message.text}</span>
-            ${message.icon ? `<img src="${message.icon}" alt="File Icon" class="file-icon">` : ''}
-            <span class="date">${messageDate}</span>
-            <hr class="msgSeparator">
-        `;
-        chatHistory.appendChild(messageElement);
-        chatHistory.scrollTop = chatHistory.scrollHeight;
+        if (message.room === currentRoom) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            const messageDate = new Date(message.date).toLocaleString('en-GB', { timeZone: 'UTC' });
+            messageElement.innerHTML = `
+                <span class="username" style="background-color: ${message.color}">${message.username}</span>
+                <span class="text">${message.text}</span>
+                ${message.icon ? `<img src="${message.icon}" alt="File Icon" class="file-icon">` : ''}
+                <span class="date">${messageDate}</span>
+                <hr class="msgSeparator">
+            `;
+            chatHistory.appendChild(messageElement);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
     });
 
     socket.on('chat history', (messages) => {
