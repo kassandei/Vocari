@@ -71,15 +71,7 @@ app.post('/login', (req, res) => {
 
 io.on('connection', (socket) => {
     console.log('a user connected via HTTPS');
-
-    socket.on('join room', (room) => {
-        socket.join(room);
-        console.log(`${socket.id} joined room: ${room}`);
-        if (!chatHistory[room]) {
-            chatHistory[room] = [];
-        }
-        socket.emit('chat history', chatHistory[room]);
-    });
+    socket.emit('chat history', chatHistory);
 
     socket.on('check username', (username, callback) => {
         const query = 'SELECT username FROM users WHERE username = ?';
@@ -104,12 +96,8 @@ io.on('connection', (socket) => {
     });
 
     socket.on('chat message', (message) => {
-        const { room, text, username, color, date } = message;
-        if (!chatHistory[room]) {
-            chatHistory[room] = [];
-        }
-        chatHistory[room].push(message);
-        io.to(room).emit('chat message', message);
+        chatHistory.push(message);
+        io.emit('chat message', message);
     });
 });
 
