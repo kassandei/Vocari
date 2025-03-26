@@ -28,6 +28,76 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const registerMessage = document.querySelector('#register-message');
     const loginMessage = document.querySelector('#login-message');
 
+    const roomSelect = document.createElement('select');
+    const roomInput = document.createElement('input');
+    const createRoomButton = document.createElement('button');
+    const roomContainer = document.createElement('div');
+    const roomPasswordInput = document.createElement('input');
+    const joinRoomButton = document.createElement('button');
+
+    roomInput.placeholder = 'Enter room name';
+    roomPasswordInput.placeholder = 'Enter room password';
+    createRoomButton.textContent = 'Create Room';
+    joinRoomButton.textContent = 'Join Room';
+    roomContainer.appendChild(roomSelect);
+    roomContainer.appendChild(roomInput);
+    roomContainer.appendChild(roomPasswordInput);
+    roomContainer.appendChild(createRoomButton);
+    roomContainer.appendChild(joinRoomButton);
+    document.body.insertBefore(roomContainer, document.querySelector('.container'));
+
+    let currentRoom = 'default';
+    socket.emit('join room', currentRoom);
+
+    createRoomButton.addEventListener('click', () => {
+        const newRoom = roomInput.value.trim();
+        const roomPassword = document.querySelector('#room-password').value.trim();
+
+        if (newRoom && roomPassword) {
+            socket.emit('create room', { room: newRoom, password: roomPassword }, (success, message) => {
+                if (success) {
+                    const option = document.createElement('option');
+                    option.value = newRoom;
+                    option.textContent = newRoom;
+                    roomSelect.appendChild(option);
+                    roomInput.value = '';
+                    document.querySelector('#room-password').value = '';
+                    showNotification('Room created successfully!');
+                } else {
+                    showNotification(message);
+                }
+            });
+        } else {
+            showNotification('Room name and password cannot be empty.');
+        }
+    });
+
+    joinRoomButton.addEventListener('click', () => {
+        const selectedRoom = roomSelect.value;
+        const roomPassword = document.querySelector('#room-password').value.trim();
+
+        if (selectedRoom && roomPassword) {
+            socket.emit('join room with password', { room: selectedRoom, password: roomPassword }, (success, message) => {
+                if (success) {
+                    currentRoom = selectedRoom;
+                    showNotification('Joined room successfully!');
+                } else {
+                    showNotification(message);
+                }
+            });
+        } else {
+            showNotification('Please select a room and enter the password.');
+        }
+    });
+
+    roomSelect.addEventListener('change', () => {
+        const selectedRoom = roomSelect.value;
+        if (selectedRoom) {
+            currentRoom = selectedRoom;
+            socket.emit('join room', currentRoom);
+        }
+    });
+
     let username = '';
     let userColor = '#000000';
     let fileToSend = null;
@@ -170,10 +240,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function sendMessage() {
         if (messageInput.value && username) {
             const message = {
+                room: currentRoom,
                 username: username,
                 text: messageInput.value,
                 color: userColor,
-                date: new Date().toISOString(), // Usa l'orario UTC in formato ISO
+                date: new Date().toISOString(),
             };
             socket.emit('chat message', message);
             messageInput.value = '';
@@ -213,17 +284,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     socket.on('chat message', (message) => {
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message');
-        const messageDate = new Date(message.date).toLocaleString('en-GB', { timeZone: 'UTC' }); // Mostra l'ora in UTC
-        messageElement.innerHTML = `
-            <span class="username" style="background-color: ${message.color}">${message.username}</span>
-            <span class="text">${message.text}</span>
-            <span class="date">${messageDate}</span>
-            <hr class="msgSeparator">
-        `;
-        chatHistory.appendChild(messageElement);
-        chatHistory.scrollTop = chatHistory.scrollHeight;
+        if (message.room === currentRoom) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            const messageDate = new Date(message.date).toLocaleString('en-GB', { timeZone: 'UTC' });
+            messageElement.innerHTML = `
+                <span class="username" style="background-color: ${message.color}">${message.username}</span>
+                <span class="text">${message.text}</span>
+                ${message.icon ? `<img src="${message.icon}" alt="File Icon" class="file-icon">` : ''}
+                <span class="date">${messageDate}</span>
+                <hr class="msgSeparator">
+            `;
+            chatHistory.appendChild(messageElement);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
     });
 
     socket.on('chat history', (messages) => {

@@ -69,9 +69,19 @@ app.post('/login', (req, res) => {
     });
 });
 
+const rooms = {};
+
 io.on('connection', (socket) => {
     console.log('a user connected via HTTPS');
-    socket.emit('chat history', chatHistory);
+
+    socket.on('join room', (room) => {
+        socket.join(room);
+        console.log(`${socket.id} joined room: ${room}`);
+        if (!chatHistory[room]) {
+            chatHistory[room] = [];
+        }
+        socket.emit('chat history', chatHistory[room]);
+    });
 
     socket.on('check username', (username, callback) => {
         const query = 'SELECT username FROM users WHERE username = ?';
@@ -88,18 +98,49 @@ io.on('connection', (socket) => {
         });
     });
 
+    socket.on('create room', ({ room, password }, callback) => {
+        if (rooms[room]) {
+            callback(false, 'Room already exists.');
+        } else {
+            rooms[room] = { password, users: [] };
+            callback(true, 'Room created successfully.');
+        }
+    });
+
+    socket.on('join room with password', ({ room, password }, callback) => {
+        if (rooms[room]) {
+            if (rooms[room].password === password) {
+                socket.join(room);
+                rooms[room].users.push(socket.id);
+                callback(true, 'Joined room successfully.');
+            } else {
+                callback(false, 'Incorrect password.');
+            }
+        } else {
+            callback(false, 'Room does not exist.');
+        }
+    });
+
     socket.on('disconnect', () => {
         if (socket.username) {
             users.delete(socket.username);
             io.emit('update users', Array.from(users));
         }
+        for (const room in rooms) {
+            rooms[room].users = rooms[room].users.filter((id) => id !== socket.id);
+            if (rooms[room].users.length === 0) {
+                delete rooms[room];
+            }
+        }
     });
 
     socket.on('chat message', (message) => {
-        const timestamp = new Date().toISOString(); // Salva l'ora in formato UTC
-        const messageWithTimestamp = { ...message, date: timestamp };
-        chatHistory.push(messageWithTimestamp); // Salva il messaggio con l'ora
-        io.emit('chat message', messageWithTimestamp); // Invia il messaggio con l'ora
+        const { room, text, username, color, date } = message;
+        if (!chatHistory[room]) {
+            chatHistory[room] = [];
+        }
+        chatHistory[room].push(message);
+        io.to(room).emit('chat message', message);
     });
 });
 

@@ -385,3 +385,35 @@ footer {
 .switch-section a:hover {
     text-decoration: underline;
 }
+
+#room-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+#room-select, #room-input, #create-room-button {
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+#room-select {
+    width: 150px;
+}
+
+#room-input {
+    flex: 1;
+}
+
+#create-room-button {
+    background-color: #35424a;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+#create-room-button:hover {
+    background-color: #2c3e50;
+}
