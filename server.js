@@ -96,8 +96,10 @@ io.on('connection', (socket) => {
     });
 
     socket.on('chat message', (message) => {
-        chatHistory.push(message);
-        io.emit('chat message', message);
+        const timestamp = new Date().toISOString(); // Salva l'ora in formato UTC
+        const messageWithTimestamp = { ...message, date: timestamp };
+        chatHistory.push(messageWithTimestamp); // Salva il messaggio con l'ora
+        io.emit('chat message', messageWithTimestamp); // Invia il messaggio con l'ora
     });
 });
 
